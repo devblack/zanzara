@@ -58,7 +58,7 @@ class Listener extends MiddlewareCollector implements MiddlewareInterface
     /**
      * @inheritDoc
      */
-    public function handle(Context $ctx, $next)
+    public function handle(Context $ctx, $next): void
     {
         call_user_func($this->callback, $ctx, ...array_merge($this->parameters, [$next]));
     }

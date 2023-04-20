@@ -150,7 +150,7 @@ class MessageTest extends TestCase
         $config->setUpdateStream(__DIR__ . '/../update_types/reply_to_message.json');
         $bot = new Zanzara("test", $config);
 
-        $bot->onReplyToMessage(function (Context $ctx) {
+        $bot->onMessage(function (Context $ctx) {
             $update = $ctx->getUpdate();
             $message = $update->getMessage();
             $replyToMessage = $message->getReplyToMessage();

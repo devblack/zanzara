@@ -22,7 +22,6 @@ use Zanzara\Telegram\Type\Message;
 use Zanzara\Telegram\Type\Passport\PassportData;
 use Zanzara\Telegram\Type\Poll\Poll;
 use Zanzara\Telegram\Type\Poll\PollAnswer;
-use Zanzara\Telegram\Type\ReplyToMessage;
 use Zanzara\Telegram\Type\Shipping\PreCheckoutQuery;
 use Zanzara\Telegram\Type\Shipping\ShippingQuery;
 use Zanzara\Telegram\Type\Shipping\SuccessfulPayment;
@@ -44,9 +43,11 @@ abstract class ListenerCollector
      */
     protected const PARAMETER_REGEX = '/\{((?:(?!\d+,?\d+?)\w)+?)\}/miu';
 
+    protected const ARGS_REGEX = '(?<$1>.*)';
+
     /**
      * Associative array for listeners.
-     * Key is always the listener type that can be either a simple string (eg. messages, cb_query_texts) or the class
+     * Key is always the listener type that can be either a simple string (e.g. messages, cb_query_texts) or the class
      * name of the Update type, @see Update::detectUpdateType().
      * Value can be an ordered array of @see Listener or another associative array where the key
      * is the listenerId and the value the actual @see Listener.
@@ -66,22 +67,22 @@ abstract class ListenerCollector
      *
      * @var array
      */
-    protected $listeners = [];
+    protected array $listeners = [];
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * @var array
      */
-    protected $middleware = [];
+    protected array $middleware = [];
 
     /**
      * @var Listener
      */
-    protected $onException;
+    protected Listener $onException;
 
     /**
      * Listen for the specified command.
@@ -99,8 +100,14 @@ abstract class ListenerCollector
      */
     public function onCommand(string $command, $callback, array $filters = []): MiddlewareCollector
     {
-        $pattern = str_replace('/', '\/', "/{$command}");
-        $command = '/^' . preg_replace(self::PARAMETER_REGEX, '(?<$1>.*)', $pattern) . ' ?$/miu';
+        $command = explode(" ", $command, 2);
+        $pattern = sprintf('\/%s(?:@[\w]{4,}+)?\b(?:\s.*)?', $command[0]);
+
+        if (isset($command[1])) {
+            $pattern .= ' ' . $command[1];
+        }
+
+        $command = '/^' . preg_replace(self::PARAMETER_REGEX, self::ARGS_REGEX, $pattern) . '?$/miu';
 
         $listener = new Listener($callback, $this->container, $command, $filters);
         $this->listeners['messages'][$command] = $listener;
@@ -126,7 +133,7 @@ abstract class ListenerCollector
      */
     public function onText(string $text, $callback, array $filters = []): MiddlewareCollector
     {
-        $text = '/^' . preg_replace(self::PARAMETER_REGEX, '(?<$1>.*)', $text) . ' ?$/miu';
+        $text = '/^' . preg_replace(self::PARAMETER_REGEX, self::ARGS_REGEX, $text) . ' ?$/miu';
         $listener = new Listener($callback, $this->container, $text, $filters);
         $this->listeners['messages'][$text] = $listener;
         return $listener;
@@ -149,26 +156,6 @@ abstract class ListenerCollector
     {
         $listener = new Listener($callback, $this->container, null, $filters);
         $this->listeners[Message::class][] = $listener;
-        return $listener;
-    }
-
-    /**
-     * Listen for a message that is a reply of another message.
-     * You can call this function more than once, every callback will be executed.
-     *
-     * Eg. $bot->onReplyToMessage(function(Context $ctx) {});
-     *
-     * @param  $callback
-     * @param array $filters for ex. ['chat_type' => 'group'], in this case the listener will be executed only if the
-     * message is sent in a group chat.
-     * @return MiddlewareCollector
-     * @throws DependencyException
-     * @throws NotFoundException
-     */
-    public function onReplyToMessage($callback, array $filters = []): MiddlewareCollector
-    {
-        $listener = new Listener($callback, $this->container, null, $filters);
-        $this->listeners[ReplyToMessage::class][] = $listener;
         return $listener;
     }
 
@@ -213,7 +200,7 @@ abstract class ListenerCollector
      */
     public function onCbQueryText(string $text, $callback, array $filters = []): MiddlewareCollector
     {
-        $text = '/^' . preg_replace(self::PARAMETER_REGEX, '(?<$1>.*)', $text) . ' ?$/miu';
+        $text = '/^' . preg_replace(self::PARAMETER_REGEX, self::ARGS_REGEX, $text) . ' ?$/miu';
         $listener = new Listener($callback, $this->container, $text, $filters);
         $this->listeners['cb_query_texts'][$text] = $listener;
         return $listener;
@@ -625,7 +612,7 @@ abstract class ListenerCollector
      *
      * In this case GenericMiddleware will be executed before SpecificMiddleware.
      *
-     * @param MiddlewareInterface|callable $middleware
+     * @param callable|MiddlewareInterface $middleware
      * @return self
      */
     public function middleware($middleware): self
@@ -638,7 +625,7 @@ abstract class ListenerCollector
      * Add cross-request middleware to each listener middleware chain.
      *
      */
-    protected function feedMiddlewareStack()
+    protected function feedMiddlewareStack(): void
     {
         array_walk_recursive($this->listeners, function ($value) {
             if ($value instanceof Listener) {

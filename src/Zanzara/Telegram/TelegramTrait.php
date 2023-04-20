@@ -86,8 +86,8 @@ trait TelegramTrait
     }
 
     /**
-     * A simple method for testing your bot's auth token. Requires no parameters. Returns basic information about the
-     * bot in form of a User object.
+     * A simple method for testing your bots auth token. Requires no parameters. Returns basic information about the
+     * bot in the form of a User object.
      *
      * @return PromiseInterface
      */
@@ -124,7 +124,7 @@ trait TelegramTrait
      * ]
      * @return PromiseInterface
      */
-    public function sendMessage(string $text, array $opt = [])
+    public function sendMessage(string $text, array $opt = []): PromiseInterface
     {
         $opt = $this->resolveChatId($opt);
         $required = compact("text");
@@ -2505,5 +2505,4 @@ trait TelegramTrait
         }
         return $opt;
     }
-
 }

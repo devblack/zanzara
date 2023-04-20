@@ -17,35 +17,35 @@ class WebhookInfo
      *
      * @var string
      */
-    private $url;
+    private string $url;
 
     /**
      * True, if a custom certificate was provided for webhook certificate checks
      *
      * @var bool
      */
-    private $has_custom_certificate;
+    private bool $has_custom_certificate;
 
     /**
      * Number of updates awaiting delivery
      *
      * @var int
      */
-    private $pending_update_count;
+    private int $pending_update_count;
 
     /**
      * Optional. Currently used webhook IP address
      *
      * @var string|null
      */
-    private $ip_address;
+    private ?string $ip_address = null;
 
     /**
      * Optional. Unix time for the most recent error that happened when trying to deliver an update via webhook
      *
      * @var int|null
      */
-    private $last_error_date;
+    private ?int $last_error_date = null;
 
     /**
      * Optional. Error message in human-readable format for the most recent error that happened when trying to deliver an
@@ -53,7 +53,7 @@ class WebhookInfo
      *
      * @var string|null
      */
-    private $last_error_message;
+    private ?string $last_error_message = null;
 
     /**
      * Optional. Unix time of the most recent error that happened when trying to
@@ -61,19 +61,19 @@ class WebhookInfo
      *
      * @var int|null
      */
-    private $last_synchronization_error_date;
+    private ?int $last_synchronization_error_date = null;
 
     /**
      * Optional. Maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery
      *
      * @var int|null
      */
-    private $max_connections;
+    private ?int $max_connections = null;
 
     /**
      * @var string[]
      */
-    private $allowed_updates;
+    private array $allowed_updates;
 
     /**
      * @return string
@@ -218,5 +218,4 @@ class WebhookInfo
     {
         $this->ip_address = $ip_address;
     }
-
 }

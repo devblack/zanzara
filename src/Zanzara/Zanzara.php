@@ -6,6 +6,8 @@ namespace Zanzara;
 
 use Clue\React\HttpProxy\ProxyConnector;
 use DI\Container;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
@@ -28,22 +30,22 @@ class Zanzara extends ListenerResolver
     /**
      * @var Config
      */
-    private $config;
+    private Config $config;
 
     /**
      * @var Telegram
      */
-    private $telegram;
+    private Telegram $telegram;
 
     /**
      * @var LoopInterface
      */
-    private $loop;
+    private LoopInterface $loop;
 
     /**
      * @var ZanzaraCache
      */
-    private $cache;
+    private ZanzaraCache $cache;
 
     /**
      * @param string $botToken
@@ -85,6 +87,10 @@ class Zanzara extends ListenerResolver
         $this->container->set(Zanzara::class, $this);
     }
 
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function run(): void
     {
         $this->feedMiddlewareStack();

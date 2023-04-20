@@ -372,7 +372,8 @@ class Update implements \JsonSerializable
 
             $updateTypeMapping = [
                 SuccessfulPayment::class => $this->message->getSuccessfulPayment(),
-                ReplyToMessage::class => $this->message->getReplyToMessage(),
+                // unnecessary for me
+                //ReplyToMessage::class => $this->message->getReplyToMessage(),
                 PassportData::class => $this->message->getPassportData(),
                 WebAppData::class => $this->message->getWebAppData(),
                 UserShared::class => $this->message->getUserShared(),
@@ -403,7 +404,7 @@ class Update implements \JsonSerializable
             'callback_query' => [
                 'class' => CallbackQuery::class,
                 'user' => 'getFrom',
-                'chat' => fn(CallbackQuery $callbackQuery) => $callbackQuery->getMessage() ? $callbackQuery->getMessage()->getChat() : null
+                'chat' => fn(CallbackQuery $callbackQuery) => $callbackQuery->getMessage()?->getChat()
             ],
             'shipping_query' => [
                 'class' => ShippingQuery::class,

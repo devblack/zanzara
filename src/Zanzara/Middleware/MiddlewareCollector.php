@@ -20,7 +20,7 @@ abstract class MiddlewareCollector
      *
      * @var MiddlewareNode
      */
-    protected $tip;
+    protected MiddlewareNode $tip;
 
     /**
      * @var ContainerInterface
@@ -39,7 +39,7 @@ abstract class MiddlewareCollector
     /**
      * Last in, first out.
      *
-     * @param MiddlewareInterface|callable $middleware
+     * @param callable|MiddlewareInterface $middleware
      * @return MiddlewareCollector
      * @throws \DI\DependencyException
      * @throws \DI\NotFoundException

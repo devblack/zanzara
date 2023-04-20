@@ -43,14 +43,14 @@ class Message
      *
      * @var int
      */
-    private $message_id;
+    private int $message_id;
 
     /**
      * Optional. Unique identifier of a message thread to which the message belongs; for supergroups only
      *
      * @var int|null
      */
-    private $message_thread_id;
+    private ?int $message_thread_id = null;
 
     /**
      * Optional. Sender of the message; empty for messages sent to channels.
@@ -59,7 +59,7 @@ class Message
      *
      * @var User|null
      */
-    private $from;
+    private ?User $from = null;
 
     /**
      * Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts,
@@ -69,42 +69,42 @@ class Message
      *
      * @var Chat|null
      */
-    private $sender_chat;
+    private ?Chat $sender_chat = null;
 
     /**
      * Date the message was sent in Unix time
      *
      * @var int
      */
-    private $date;
+    private int $date;
 
     /**
      * Conversation the message belongs to
      *
      * @var Chat
      */
-    private $chat;
+    private Chat $chat;
 
     /**
      * Optional. For forwarded messages, sender of the original message
      *
      * @var User|null
      */
-    private $forward_from;
+    private ?User $forward_from = null;
 
     /**
      * Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
      *
      * @var Chat|null
      */
-    private $forward_from_chat;
+    private ?Chat $forward_from_chat = null;
 
     /**
      * Optional. For messages forwarded from channels, identifier of the original message in the channel
      *
      * @var int|null
      */
-    private $forward_from_message_id;
+    private ?int $forward_from_message_id = null;
 
     /**
      * Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator,
@@ -112,7 +112,7 @@ class Message
      *
      * @var string|null
      */
-    private $forward_signature;
+    private ?string $forward_signature = null;
 
     /**
      * Optional. Sender's name for messages forwarded from users who disallow adding a link
@@ -120,28 +120,28 @@ class Message
      *
      * @var string|null
      */
-    private $forward_sender_name;
+    private ?string $forward_sender_name = null;
 
     /**
      * Optional. For forwarded messages, date the original message was sent in Unix time
      *
      * @var int|null
      */
-    private $forward_date;
+    private ?int $forward_date = null;
 
     /**
      * Optional. True, if the message is sent to a forum topic
      *
      * @var bool|null
      */
-    private $is_topic_message;
+    private ?bool $is_topic_message = null;
 
     /**
      * Optional. True, if the message is a channel post that was automatically forwarded to the connected discussion group
      *
      * @var bool|null
      */
-    private $is_automatic_forward;
+    private ?bool $is_automatic_forward = null;
 
     /**
      * Optional. For replies, the original message. Note that the Message object in this field will not contain further
@@ -149,35 +149,35 @@ class Message
      *
      * @var Message|null
      */
-    private $reply_to_message;
+    private ?Message $reply_to_message = null;
 
     /**
      * Optional. Bot through which the message was sent
      *
      * @var User|null
      */
-    private $via_bot;
+    private ?User $via_bot = null;
 
     /**
      * Optional. Date the message was last edited in Unix time
      *
      * @var int|null
      */
-    private $edit_date;
+    private ?int $edit_date = null;
 
     /**
      * Optional. True, if the message can't be forwarded
      *
      * @var bool|null
      */
-    private $has_protected_content;
+    private ?bool $has_protected_content = null;
 
     /**
      * Optional. The unique identifier of a media message group this message belongs to
      *
      * @var string|null
      */
-    private $media_group_id;
+    private ?string $media_group_id = null;
 
     /**
      * Optional. Signature of the post author for messages in channels, or the custom title
@@ -185,21 +185,28 @@ class Message
      *
      * @var string|null
      */
-    private $author_signature;
+    private ?string $author_signature = null;
+
+    /**
+     * Optional. For command messages
+     *
+     * @var string|null
+     */
+    private ?string $command = null;
 
     /**
      * Optional. For text messages, the actual UTF-8 text of the message
      *
      * @var string|null
      */
-    private $text;
+    private ?string $text = null;
 
     /**
      * Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
      *
      * @var MessageEntity[]|null
      */
-    private $entities;
+    private ?array $entities = null;
 
     /**
      * Optional. Message is an animation, information about the animation. For backward compatibility,
@@ -207,63 +214,63 @@ class Message
      *
      * @var Animation|null
      */
-    private $animation;
+    private ?Animation $animation = null;
 
     /**
      * Optional. Message is an audio file, information about the file
      *
      * @var Audio|null
      */
-    private $audio;
+    private ?Audio $audio = null;
 
     /**
      * Optional. Message is a general file, information about the file
      *
      * @var Document|null
      */
-    private $document;
+    private ?Document $document = null;
 
     /**
      * Optional. Message is a photo, available sizes of the photo
      *
      * @var File\PhotoSize[]|null
      */
-    private $photo;
+    private ?array $photo = null;
 
     /**
      * Optional. Message is a sticker, information about the sticker
      *
      * @var Sticker|null
      */
-    private $sticker;
+    private ?Sticker $sticker = null;
 
     /**
      * Optional. Message is a video, information about the video
      *
      * @var Video|null
      */
-    private $video;
+    private ?Video $video = null;
 
     /**
      * Optional. Message is a video note, information about the video message
      *
      * @var VideoNote|null
      */
-    private $video_note;
+    private ?VideoNote $video_note = null;
 
     /**
      * Optional. Message is a voice message, information about the file
      *
      * @var Voice|null
      */
-    private $voice;
+    private ?Voice $voice = null;
 
     /**
      * Optional. Caption for the animation, audio, document, photo, video or voice
      *
      * @var string|null
      */
-    private $caption;
+    private ?string $caption = null;
 
     /**
      * Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc.
@@ -271,42 +278,42 @@ class Message
      *
      * @var MessageEntity[]|null
      */
-    private $caption_entities;
+    private ?array $caption_entities = null;
 
     /**
      * Optional. True, if the message media is covered by a spoiler animation
      *
      * @var bool|null
      */
-    private $has_media_spoiler;
+    private ?bool $has_media_spoiler = null;
 
     /**
      * Optional. Message is a shared contact, information about the contact
      *
      * @var Contact|null
      */
-    private $contact;
+    private ?Contact $contact = null;
 
     /**
      * Optional. Message is a dice with random value
      *
      * @var Dice|null
      */
-    private $dice;
+    private ?Dice $dice = null;
 
     /**
      * Optional. Message is a game, information about the game
      *
      * @var Game|null
      */
-    private $game;
+    private ?Game $game = null;
 
     /**
      * Optional. Message is a native poll, information about the poll
      *
      * @var Poll|null
      */
-    private $poll;
+    private ?Poll $poll = null;
 
     /**
      * Optional. Message is a venue, information about the venue.
@@ -314,14 +321,14 @@ class Message
      *
      * @var Venue|null
      */
-    private $venue;
+    private ?Venue $venue = null;
 
     /**
      * Optional. Message is a shared location, information about the location
      *
      * @var Location|null
      */
-    private $location;
+    private ?Location $location = null;
 
     /**
      * Optional. New members that were added to the group or supergroup
@@ -329,42 +336,42 @@ class Message
      *
      * @var User[]|null
      */
-    private $new_chat_members;
+    private ?array $new_chat_members = null;
 
     /**
      * Optional. A member was removed from the group, information about them (this member may be the bot itself)
      *
      * @var User|null
      */
-    private $left_chat_member;
+    private ?User $left_chat_member = null;
 
     /**
      * Optional. A chat title was changed to this value
      *
      * @var string|null
      */
-    private $new_chat_title;
+    private ?string $new_chat_title = null;
 
     /**
      * Optional. A chat photo was change to this value
      *
      * @var File\PhotoSize[]|null
      */
-    private $new_chat_photo;
+    private ?array $new_chat_photo = null;
 
     /**
      * Optional. Service message: the chat photo was deleted
      *
      * @var bool|null
      */
-    private $delete_chat_photo;
+    private ?bool $delete_chat_photo = null;
 
     /**
      * Optional. Service message: the group has been created
      *
      * @var bool|null
      */
-    private $group_chat_created;
+    private ?bool $group_chat_created = null;
 
     /**
      * Optional. Service message: the supergroup has been created. This field can't be received in a message coming
@@ -373,7 +380,7 @@ class Message
      *
      * @var bool|null
      */
-    private $supergroup_chat_created;
+    private ?bool $supergroup_chat_created = null;
 
     /**
      * Optional. Service message: the channel has been created. This field can't be received in a message coming
@@ -382,33 +389,33 @@ class Message
      *
      * @var bool|null
      */
-    private $channel_chat_created;
+    private ?bool $channel_chat_created = null;
 
     /**
      * Optional. Service message: auto-delete timer settings changed in the chat
      *
      * @var MessageAutoDeleteTimerChanged|null
      */
-    private $message_auto_delete_timer_changed;
+    private ?MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed = null;
 
     /**
      * Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater than
      * 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller
-     * than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier.
+     * than 52 bits, so a signed 64-bit integer or double-precision float type are safe for storing this identifier.
      *
      * @var int|null
      */
-    private $migrate_to_chat_id;
+    private ?int $migrate_to_chat_id = null;
 
     /**
      * Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater
      * than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is
-     * smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this
+     * smaller than 52 bits, so a signed 64-bit integer or double-precision float type are safe for storing this
      * identifier.
      *
      * @var int|null
      */
-    private $migrate_from_chat_id;
+    private ?int $migrate_from_chat_id = null;
 
     /**
      * Optional. Specified message was pinned. Note that the Message object in this field will not contain further
@@ -416,147 +423,147 @@ class Message
      *
      * @var Message|null
      */
-    private $pinned_message;
+    private ?Message $pinned_message = null;
 
     /**
      * Optional. Message is an invoice for a payment, information about the invoice.
      *
      * @var Invoice|null
      */
-    private $invoice;
+    private ?Invoice $invoice = null;
 
     /**
      * Optional. Message is a service message about a successful payment, information about the payment
      *
      * @var SuccessfulPayment|null
      */
-    private $successful_payment;
+    private ?SuccessfulPayment $successful_payment = null;
 
     /**
      * Optional. Service message: a user was shared with the bot
      *
      * @var UserShared|null
      */
-    private $user_shared;
+    private ?UserShared $user_shared = null;
 
     /**
      * Optional. Service message: a chat was shared with the bot
      *
      * @var ChatShared|null
      */
-    private $chat_shared;
+    private ?ChatShared $chat_shared = null;
 
     /**
      * Optional. The domain name of the website on which the user has logged in
      *
      * @var string|null
      */
-    private $connected_website;
+    private ?string $connected_website = null;
 
     /**
      * Optional. Service message: the user allowed the bot added to the attachment menu to write messages
      *
      * @var WriteAccessAllowed|null
      */
-    private $write_access_allowed;
+    private ?WriteAccessAllowed $write_access_allowed = null;
 
     /**
      * Optional. Telegram Passport data
      *
      * @var PassportData|null
      */
-    private $passport_data;
+    private ?PassportData $passport_data = null;
 
     /**
      * Optional. Service message. A user in the chat triggered another user's proximity alert while sharing Live Location.
      *
      * @var ProximityAlertTriggered|null
      */
-    private $proximity_alert_triggered;
+    private ?ProximityAlertTriggered $proximity_alert_triggered = null;
 
     /**
      * Optional. Service message: forum topic created
      *
      * @var ForumTopicCreated|null
      */
-    private $forum_topic_created;
+    private ?ForumTopicCreated $forum_topic_created = null;
 
     /**
      * Optional. Service message: forum topic edited
      *
      * @var ForumTopicEdited|null
      */
-    private $forum_topic_edited;
+    private ?ForumTopicEdited $forum_topic_edited = null;
 
     /**
      * Optional. Service message: forum topic closed
      *
      * @var ForumTopicClosed|null
      */
-    private $forum_topic_closed;
+    private ?ForumTopicClosed $forum_topic_closed = null;
 
     /**
      * Optional. Service message: forum topic reopened
      *
      * @var ForumTopicReopened|null
      */
-    private $forum_topic_reopened;
+    private ?ForumTopicReopened $forum_topic_reopened = null;
 
     /**
      * Optional. Service message: the 'General' forum topic hidden
      *
      * @var GeneralForumTopicHidden|null
      */
-    private $general_forum_topic_hidden;
+    private ?GeneralForumTopicHidden $general_forum_topic_hidden = null;
 
     /**
      * Optional. Service message: the 'General' forum topic unhidden
      *
      * @var GeneralForumTopicUnhidden|null
      */
-    private $general_forum_topic_unhidden;
+    private ?GeneralForumTopicUnhidden $general_forum_topic_unhidden = null;
 
     /**
      * Optional. Service message: video chat scheduled
      *
      * @var VideoChatScheduled|null
      */
-    private $video_chat_scheduled;
+    private ?VideoChatScheduled $video_chat_scheduled = null;
 
     /**
      * Optional. Service message: video chat started
      *
      * @var VideoChatStarted|null
      */
-    private $video_chat_started;
+    private ?VideoChatStarted $video_chat_started = null;
 
     /**
      * Optional. Service message: video chat ended
      *
      * @var VideoChatEnded|null
      */
-    private $video_chat_ended;
+    private ?VideoChatEnded $video_chat_ended = null;
 
     /**
      * Optional. Service message: new participants invited to a video chat
      *
      * @var VideoChatParticipantsInvited|null
      */
-    private $video_chat_participants_invited;
+    private ?VideoChatParticipantsInvited $video_chat_participants_invited = null;
 
     /**
      * Optional. Service message: data sent by a Web App
      *
      * @var WebAppData|null
      */
-    private $web_app_data;
+    private ?WebAppData $web_app_data = null;
 
     /**
      * Optional. Inline keyboard attached to the message. login_url buttons are represented as ordinary url buttons.
      *
      * @var InlineKeyboardMarkup|null
      */
-    private $reply_markup;
+    private ?InlineKeyboardMarkup $reply_markup = null;
 
     /**
      * @return int
@@ -876,6 +883,31 @@ class Message
     public function setAuthorSignature(?string $author_signature): void
     {
         $this->author_signature = $author_signature;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCommand(): ?string
+    {
+        return $this->command;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParsedCommand(): string
+    {
+        if (\preg_match('/^[\/.?!$]/', $this->text) === 1) {
+            $cmdFilter = \preg_replace('/[.?!$]/', '/', $this->text, 1);
+            $cmdSplit = explode(' ', $cmdFilter, 2);
+
+            $this->command = strstr($cmdSplit[0], '@', true) ?: $cmdSplit[0];
+            $this->text = $cmdSplit[1] ?? null;
+
+            return $cmdFilter;
+        }
+        return $this->text;
     }
 
     /**

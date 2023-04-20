@@ -42,7 +42,7 @@ class CommandTest extends TestCase
             $this->assertSame('mscott', $message->getChat()->getUsername());
             $this->assertSame('private', $message->getChat()->getType());
             $this->assertSame(1584984664, $message->getDate());
-            $this->assertSame('/start', $message->getText());
+            $this->assertSame('/start', $message->getCommand());
             $this->assertCount(1, $message->getEntities());
             $entity = $message->getEntities()[0];
             $this->assertInstanceOf(MessageEntity::class, $entity);
@@ -108,7 +108,8 @@ class CommandTest extends TestCase
             $this->assertSame('mscott', $message->getChat()->getUsername());
             $this->assertSame('private', $message->getChat()->getType());
             $this->assertSame(1584984664, $message->getDate());
-            $this->assertSame('/start ciao hello', $message->getText());
+            $this->assertSame('start', $message->getCommand());
+            $this->assertSame('ciao hello', $message->getText());
             $this->assertSame('ciao', $param);
             $this->assertSame('hello', $otherParam);
             $this->assertCount(1, $message->getEntities());

@@ -63,7 +63,7 @@ class MessageQueue
         foreach ($chatIds as $chatId) {
             $clone = $opt;
             $clone['chat_id'] = $chatId;
-            array_push($payload, $clone);
+            $payload[] = $clone;
         }
         $dequeue = function (TimerInterface $timer) use (&$payload) {
             // if there's no more message to dequeue cancel the timer

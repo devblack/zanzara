@@ -25,7 +25,7 @@ trait CallableResolver
      * @throws DependencyException
      * @throws NotFoundException
      */
-    protected function getCallable($callback)
+    protected function getCallable($callback): callable|array|MiddlewareInterface
     {
         // if is a class definition, resolve it to an instance through the container
         if (is_array($callback) && count($callback) === 2 && is_string($callback[0]) && class_exists($callback[0])) {

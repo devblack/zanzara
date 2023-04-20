@@ -32,67 +32,67 @@ class Config
     /**
      * @var string
      */
-    private $botToken;
+    private string $botToken;
 
     /**
      * @var LoopInterface|null
      */
-    private $loop;
+    private ?LoopInterface $loop = null;
 
     /**
      * @var CacheInterface|null
      */
-    private $cache;
+    private ?CacheInterface $cache = null;
 
     /**
      * @var boolean
      */
-    private $useReactFileSystem = false;
+    private bool $useReactFileSystem = false;
 
     /**
      * @var Container|null
      */
-    private $container;
+    private ?Container $container = null;
 
     /**
      * @var string|UpdateModeInterface
      */
-    private $updateMode = self::POLLING_MODE;
+    private string|UpdateModeInterface $updateMode = self::POLLING_MODE;
 
     /**
      * @var string|null
      */
-    private $parseMode;
+    private ?string $parseMode = null;
 
     /**
      * @var string
      */
-    private $updateStream = 'php://input';
+    private string $updateStream = 'php://input';
 
     /**
      * @var string
      */
-    private $apiTelegramUrl = 'https://api.telegram.org';
+    private string $apiTelegramUrl = 'https://api.telegram.org';
 
     /**
      * @var string
      */
-    private $serverUri = "0.0.0.0:8080";
+    private string $serverUri = "0.0.0.0:8080";
 
     /**
      * @var array
      */
-    private $serverContext = [];
+    private array $serverContext = [];
 
     /**
      * @var float
      */
-    private $bulkMessageInterval = 2.0;
+    private float $bulkMessageInterval = 2.0;
 
     /**
      * @var bool
      */
-    private $webhookTokenCheck = false;
+    private bool $webhookTokenCheck = false;
 
     /**
      * Timeout in seconds for long polling. Defaults to 0, i.e. usual short polling. Should be positive, short polling
@@ -100,21 +100,21 @@ class Config
      *
      * @var int
      */
-    private $pollingTimeout = 50;
+    private int $pollingTimeout = 50;
 
     /**
      * Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
      *
      * @var int
      */
-    private $pollingLimit = 100;
+    private int $pollingLimit = 100;
 
     /**
      * Defines when we have to retry after the processing of an update has given error.
      *
      * @var float
      */
-    private $pollingRetry = 2.0;
+    private float $pollingRetry = 2.0;
 
     /**
      * A JSON-serialized list of the update types you want your bot to receive. For example, specify
@@ -125,17 +125,17 @@ class Config
      *
      * @var array
      */
-    private $pollingAllowedUpdates = [];
+    private array $pollingAllowedUpdates = [];
 
     /**
      * @var LoggerInterface|null
      */
-    private $logger;
+    private ?LoggerInterface $logger = null;
 
     /**
      * @var bool
      */
-    private $disableZanzaraLogger = false;
+    private bool $disableZanzaraLogger = false;
 
     /**
      * @var callable|null
@@ -146,50 +146,50 @@ class Config
      * Default ttl in seconds. Null means that item will stay in the cache
      * for as long as the underlying implementation supports.
      * Check reactphp cache implementation for more information
-     * @var float|null
+     * @var float
      */
-    private $cacheTtl = 180;
+    private float $cacheTtl = 180;
 
     /**
-     * @var float|null
+     * @var float
      */
-    private $conversationTtl = 60 * 60 * 24;
+    private float $conversationTtl = 60 * 60 * 24;
 
     /**
      * @var Connector|null
      */
-    private $connector;
+    private ?Connector $connector = null;
 
     /**
      *
      * @since 0.5.1
      * @var array
      */
-    private $connectorOptions = [];
+    private array $connectorOptions = [];
 
     /**
      *
      * @since 0.5.1
      * @var string|null
      */
-    private $proxyUrl;
+    private ?string $proxyUrl = null;
 
     /**
      *
      * @since 0.5.1
      * @var array
      */
-    private $proxyHttpHeaders = [];
+    private array $proxyHttpHeaders = [];
 
     /**
      * @var Browser|null
      */
-    private $browser;
+    private ?Browser $browser = null;
 
     /**
      * @var string
      */
-    private $contextClass = Context::class;
+    private string $contextClass = Context::class;
 
     /**
      * @var bool
@@ -215,7 +215,7 @@ class Config
     /**
      * @return string|UpdateModeInterface
      */
-    public function getUpdateMode()
+    public function getUpdateMode(): UpdateModeInterface|string
     {
         return $this->updateMode;
     }
@@ -473,7 +473,7 @@ class Config
     /**
      * @param bool $bool
      */
-    public function useReactFileSystem(bool $bool)
+    public function useReactFileSystem(bool $bool): void
     {
         $this->useReactFileSystem = $bool;
     }
@@ -481,7 +481,7 @@ class Config
     /**
      * @return bool
      */
-    public function isReactFileSystem()
+    public function isReactFileSystem(): bool
     {
         return $this->useReactFileSystem;
     }
