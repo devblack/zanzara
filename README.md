@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/badfarm/zanzara/blob/develop/zanzara_logo.png">
+  <img src="https://raw.githubusercontent.com/badfarm/zanzara/develop/zanzara_logo.png">
 </p>
 
 Asynchronous PHP Telegram Bot Framework built on top of [ReactPHP](https://reactphp.org/)
