@@ -9,16 +9,29 @@ use DI\NotFoundException;
 use Psr\Container\ContainerInterface;
 use Zanzara\Middleware\MiddlewareCollector;
 use Zanzara\Middleware\MiddlewareInterface;
+use Zanzara\Telegram\Type\BotSubscriptionUpdated;
+use Zanzara\Telegram\Type\BusinessConnection;
+use Zanzara\Telegram\Type\BusinessMessage;
+use Zanzara\Telegram\Type\BusinessMessagesDeleted;
 use Zanzara\Telegram\Type\CallbackQuery;
 use Zanzara\Telegram\Type\ChannelPost;
+use Zanzara\Telegram\Type\ChatBoostRemoved;
+use Zanzara\Telegram\Type\ChatBoostUpdated;
 use Zanzara\Telegram\Type\ChatJoinRequest;
 use Zanzara\Telegram\Type\ChatMemberUpdated;
 use Zanzara\Telegram\Type\ChatShared;
 use Zanzara\Telegram\Type\ChosenInlineResult;
+use Zanzara\Telegram\Type\EditedBusinessMessage;
 use Zanzara\Telegram\Type\EditedChannelPost;
 use Zanzara\Telegram\Type\EditedMessage;
+use Zanzara\Telegram\Type\GuestMessage;
 use Zanzara\Telegram\Type\InlineQuery;
+use Zanzara\Telegram\Type\ManagedBotUpdated;
 use Zanzara\Telegram\Type\Message;
+use Zanzara\Telegram\Type\MessageGenerationStopped;
+use Zanzara\Telegram\Type\MessageReactionCountUpdated;
+use Zanzara\Telegram\Type\MessageReactionUpdated;
+use Zanzara\Telegram\Type\PaidMediaPurchased;
 use Zanzara\Telegram\Type\Passport\PassportData;
 use Zanzara\Telegram\Type\Poll\Poll;
 use Zanzara\Telegram\Type\Poll\PollAnswer;
@@ -559,6 +572,240 @@ abstract class ListenerCollector
     {
         $listener = new Listener($callback, $this->container, null, $filters);
         $this->listeners[ChatShared::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a message reaction update.
+     *
+     * Eg. $bot->onMessageReaction(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onMessageReaction($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[MessageReactionUpdated::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a message reaction count update.
+     *
+     * Eg. $bot->onMessageReactionCount(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onMessageReactionCount($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[MessageReactionCountUpdated::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a business connection update.
+     *
+     * Eg. $bot->onBusinessConnection(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onBusinessConnection($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[BusinessConnection::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a business message update.
+     *
+     * Eg. $bot->onBusinessMessage(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onBusinessMessage($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[BusinessMessage::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for an edited business message update.
+     *
+     * Eg. $bot->onEditedBusinessMessage(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onEditedBusinessMessage($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[EditedBusinessMessage::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a deleted business messages update.
+     *
+     * Eg. $bot->onDeletedBusinessMessages(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onDeletedBusinessMessages($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[BusinessMessagesDeleted::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a guest message update.
+     *
+     * Eg. $bot->onGuestMessage(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onGuestMessage($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[GuestMessage::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a purchased paid media update.
+     *
+     * Eg. $bot->onPurchasedPaidMedia(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onPurchasedPaidMedia($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[PaidMediaPurchased::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a chat boost update.
+     *
+     * Eg. $bot->onChatBoost(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onChatBoost($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[ChatBoostUpdated::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a removed chat boost update.
+     *
+     * Eg. $bot->onRemovedChatBoost(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onRemovedChatBoost($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[ChatBoostRemoved::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a managed bot update.
+     *
+     * Eg. $bot->onManagedBot(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onManagedBot($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[ManagedBotUpdated::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a bot subscription update.
+     *
+     * Eg. $bot->onSubscription(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onSubscription($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[BotSubscriptionUpdated::class][] = $listener;
+        return $listener;
+    }
+
+    /**
+     * Listen for a stopped message generation update.
+     *
+     * Eg. $bot->onStoppedMessageGeneration(function(Context $ctx) {});
+     *
+     * @param  $callback
+     * @param array $filters
+     * @return MiddlewareCollector
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
+    public function onStoppedMessageGeneration($callback, array $filters = []): MiddlewareCollector
+    {
+        $listener = new Listener($callback, $this->container, null, $filters);
+        $this->listeners[MessageGenerationStopped::class][] = $listener;
         return $listener;
     }
 

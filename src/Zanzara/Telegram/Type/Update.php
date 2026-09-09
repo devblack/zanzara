@@ -110,6 +110,66 @@ class Update implements \JsonSerializable
     private $poll_answer;
 
     /**
+     * Optional. The bot was connected to or disconnected from a business account, or a user edited an existing
+     * connection with the bot
+     *
+     * @var BusinessConnection|null
+     */
+    private $business_connection;
+
+    /**
+     * Optional. New non-service message from a connected business account
+     *
+     * @var BusinessMessage|null
+     */
+    private $business_message;
+
+    /**
+     * Optional. New version of a message from a connected business account
+     *
+     * @var EditedBusinessMessage|null
+     */
+    private $edited_business_message;
+
+    /**
+     * Optional. Messages were deleted from a connected business account
+     *
+     * @var BusinessMessagesDeleted|null
+     */
+    private $deleted_business_messages;
+
+    /**
+     * Optional. Message sent to a channel of a guest user
+     *
+     * @var GuestMessage|null
+     */
+    private $guest_message;
+
+    /**
+     * Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must
+     * explicitly specify "message_reaction" in the list of allowed_updates to receive these updates.
+     *
+     * @var MessageReactionUpdated|null
+     */
+    private $message_reaction;
+
+    /**
+     * Optional. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the
+     * chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these
+     * updates.
+     *
+     * @var MessageReactionCountUpdated|null
+     */
+    private $message_reaction_count;
+
+    /**
+     * Optional. New incoming paid media purchase
+     *
+     * @var PaidMediaPurchased|null
+     */
+    private $purchased_paid_media;
+
+    /**
      * @var string
      */
     private string $updateType;
@@ -136,7 +196,7 @@ class Update implements \JsonSerializable
      * Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must
      * explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
      *
-     * @var ChatMember|null
+     * @var ChatMemberUpdated|null
      */
     private $chat_member;
 
@@ -147,6 +207,43 @@ class Update implements \JsonSerializable
      * @var ChatJoinRequest|null
      */
     private $chat_join_request;
+
+    /**
+     * Optional. A chat boost was added or changed. The bot must be an administrator in the chat to receive these
+     * updates.
+     *
+     * @var ChatBoostUpdated|null
+     */
+    private $chat_boost;
+
+    /**
+     * Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+     *
+     * @var ChatBoostRemoved|null
+     */
+    private $removed_chat_boost;
+
+    /**
+     * Optional. A user created a bot as a managed bot. The bot must be a bot provider to receive these updates.
+     *
+     * @var ManagedBotUpdated|null
+     */
+    private $managed_bot;
+
+    /**
+     * Optional. The user's subscription to the bot changed. The bot must be a payments provider to receive these
+     * updates.
+     *
+     * @var BotSubscriptionUpdated|null
+     */
+    private $subscription;
+
+    /**
+     * Optional. An update about a user stopping message generation
+     *
+     * @var MessageGenerationStopped|null
+     */
+    private $stopped_message_generation;
 
     /**
      * @return int
@@ -341,6 +438,134 @@ class Update implements \JsonSerializable
     }
 
     /**
+     * @return BusinessConnection|null
+     */
+    public function getBusinessConnection(): ?BusinessConnection
+    {
+        return $this->business_connection;
+    }
+
+    /**
+     * @param BusinessConnection|null $business_connection
+     */
+    public function setBusinessConnection(?BusinessConnection $business_connection): void
+    {
+        $this->business_connection = $business_connection;
+    }
+
+    /**
+     * @return BusinessMessage|null
+     */
+    public function getBusinessMessage(): ?BusinessMessage
+    {
+        return $this->business_message;
+    }
+
+    /**
+     * @param BusinessMessage|null $business_message
+     */
+    public function setBusinessMessage(?BusinessMessage $business_message): void
+    {
+        $this->business_message = $business_message;
+    }
+
+    /**
+     * @return EditedBusinessMessage|null
+     */
+    public function getEditedBusinessMessage(): ?EditedBusinessMessage
+    {
+        return $this->edited_business_message;
+    }
+
+    /**
+     * @param EditedBusinessMessage|null $edited_business_message
+     */
+    public function setEditedBusinessMessage(?EditedBusinessMessage $edited_business_message): void
+    {
+        $this->edited_business_message = $edited_business_message;
+    }
+
+    /**
+     * @return BusinessMessagesDeleted|null
+     */
+    public function getDeletedBusinessMessages(): ?BusinessMessagesDeleted
+    {
+        return $this->deleted_business_messages;
+    }
+
+    /**
+     * @param BusinessMessagesDeleted|null $deleted_business_messages
+     */
+    public function setDeletedBusinessMessages(?BusinessMessagesDeleted $deleted_business_messages): void
+    {
+        $this->deleted_business_messages = $deleted_business_messages;
+    }
+
+    /**
+     * @return GuestMessage|null
+     */
+    public function getGuestMessage(): ?GuestMessage
+    {
+        return $this->guest_message;
+    }
+
+    /**
+     * @param GuestMessage|null $guest_message
+     */
+    public function setGuestMessage(?GuestMessage $guest_message): void
+    {
+        $this->guest_message = $guest_message;
+    }
+
+    /**
+     * @return MessageReactionUpdated|null
+     */
+    public function getMessageReaction(): ?MessageReactionUpdated
+    {
+        return $this->message_reaction;
+    }
+
+    /**
+     * @param MessageReactionUpdated|null $message_reaction
+     */
+    public function setMessageReaction(?MessageReactionUpdated $message_reaction): void
+    {
+        $this->message_reaction = $message_reaction;
+    }
+
+    /**
+     * @return MessageReactionCountUpdated|null
+     */
+    public function getMessageReactionCount(): ?MessageReactionCountUpdated
+    {
+        return $this->message_reaction_count;
+    }
+
+    /**
+     * @param MessageReactionCountUpdated|null $message_reaction_count
+     */
+    public function setMessageReactionCount(?MessageReactionCountUpdated $message_reaction_count): void
+    {
+        $this->message_reaction_count = $message_reaction_count;
+    }
+
+    /**
+     * @return PaidMediaPurchased|null
+     */
+    public function getPurchasedPaidMedia(): ?PaidMediaPurchased
+    {
+        return $this->purchased_paid_media;
+    }
+
+    /**
+     * @param PaidMediaPurchased|null $purchased_paid_media
+     */
+    public function setPurchasedPaidMedia(?PaidMediaPurchased $purchased_paid_media): void
+    {
+        $this->purchased_paid_media = $purchased_paid_media;
+    }
+
+    /**
      * @return string|null
      */
     public function getUpdateType(): ?string
@@ -435,7 +660,52 @@ class Update implements \JsonSerializable
                 'user' => 'getUser',
                 'chat' => null
             ],
+            'business_connection' => [
+                'class' => BusinessConnection::class,
+                'user' => 'getUser',
+                'chat' => null
+            ],
+            'business_message' => [
+                'class' => BusinessMessage::class,
+                'user' => 'getFrom',
+                'chat' => 'getChat'
+            ],
+            'edited_business_message' => [
+                'class' => EditedBusinessMessage::class,
+                'user' => 'getFrom',
+                'chat' => 'getChat'
+            ],
+            'deleted_business_messages' => [
+                'class' => BusinessMessagesDeleted::class,
+                'user' => null,
+                'chat' => 'getChat'
+            ],
+            'guest_message' => [
+                'class' => GuestMessage::class,
+                'user' => 'getFrom',
+                'chat' => 'getChat'
+            ],
+            'message_reaction' => [
+                'class' => MessageReactionUpdated::class,
+                'user' => 'getUser',
+                'chat' => 'getChat'
+            ],
+            'message_reaction_count' => [
+                'class' => MessageReactionCountUpdated::class,
+                'user' => null,
+                'chat' => 'getChat'
+            ],
+            'purchased_paid_media' => [
+                'class' => PaidMediaPurchased::class,
+                'user' => 'getFrom',
+                'chat' => null
+            ],
             'my_chat_member' => [
+                'class' => ChatMemberUpdated::class,
+                'user' => 'getFrom',
+                'chat' => 'getChat'
+            ],
+            'chat_member' => [
                 'class' => ChatMemberUpdated::class,
                 'user' => 'getFrom',
                 'chat' => 'getChat'
@@ -443,6 +713,31 @@ class Update implements \JsonSerializable
             'chat_join_request' => [
                 'class' => ChatJoinRequest::class,
                 'user' => 'getFrom',
+                'chat' => 'getChat'
+            ],
+            'chat_boost' => [
+                'class' => ChatBoostUpdated::class,
+                'user' => null,
+                'chat' => 'getChat'
+            ],
+            'removed_chat_boost' => [
+                'class' => ChatBoostRemoved::class,
+                'user' => null,
+                'chat' => 'getChat'
+            ],
+            'managed_bot' => [
+                'class' => ManagedBotUpdated::class,
+                'user' => 'getUser',
+                'chat' => null
+            ],
+            'subscription' => [
+                'class' => BotSubscriptionUpdated::class,
+                'user' => 'getUser',
+                'chat' => null
+            ],
+            'stopped_message_generation' => [
+                'class' => MessageGenerationStopped::class,
+                'user' => null,
                 'chat' => 'getChat'
             ]
         ];
@@ -506,17 +801,17 @@ class Update implements \JsonSerializable
     }
 
     /**
-     * @return ChatMember|null
+     * @return ChatMemberUpdated|null
      */
-    public function getChatMember(): ?ChatMember
+    public function getChatMember(): ?ChatMemberUpdated
     {
         return $this->chat_member;
     }
 
     /**
-     * @param ChatMember|null $chat_member
+     * @param ChatMemberUpdated|null $chat_member
      */
-    public function setChatMember(?ChatMember $chat_member): void
+    public function setChatMember(?ChatMemberUpdated $chat_member): void
     {
         $this->chat_member = $chat_member;
     }
@@ -535,6 +830,86 @@ class Update implements \JsonSerializable
     public function setChatJoinRequest(?ChatJoinRequest $chat_join_request): void
     {
         $this->chat_join_request = $chat_join_request;
+    }
+
+    /**
+     * @return ChatBoostUpdated|null
+     */
+    public function getChatBoost(): ?ChatBoostUpdated
+    {
+        return $this->chat_boost;
+    }
+
+    /**
+     * @param ChatBoostUpdated|null $chat_boost
+     */
+    public function setChatBoost(?ChatBoostUpdated $chat_boost): void
+    {
+        $this->chat_boost = $chat_boost;
+    }
+
+    /**
+     * @return ChatBoostRemoved|null
+     */
+    public function getRemovedChatBoost(): ?ChatBoostRemoved
+    {
+        return $this->removed_chat_boost;
+    }
+
+    /**
+     * @param ChatBoostRemoved|null $removed_chat_boost
+     */
+    public function setRemovedChatBoost(?ChatBoostRemoved $removed_chat_boost): void
+    {
+        $this->removed_chat_boost = $removed_chat_boost;
+    }
+
+    /**
+     * @return ManagedBotUpdated|null
+     */
+    public function getManagedBot(): ?ManagedBotUpdated
+    {
+        return $this->managed_bot;
+    }
+
+    /**
+     * @param ManagedBotUpdated|null $managed_bot
+     */
+    public function setManagedBot(?ManagedBotUpdated $managed_bot): void
+    {
+        $this->managed_bot = $managed_bot;
+    }
+
+    /**
+     * @return BotSubscriptionUpdated|null
+     */
+    public function getSubscription(): ?BotSubscriptionUpdated
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * @param BotSubscriptionUpdated|null $subscription
+     */
+    public function setSubscription(?BotSubscriptionUpdated $subscription): void
+    {
+        $this->subscription = $subscription;
+    }
+
+    /**
+     * @return MessageGenerationStopped|null
+     */
+    public function getStoppedMessageGeneration(): ?MessageGenerationStopped
+    {
+        return $this->stopped_message_generation;
+    }
+
+    /**
+     * @param MessageGenerationStopped|null $stopped_message_generation
+     */
+    public function setStoppedMessageGeneration(?MessageGenerationStopped $stopped_message_generation): void
+    {
+        $this->stopped_message_generation = $stopped_message_generation;
     }
 
     public function __toString()
