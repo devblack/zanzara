@@ -19,6 +19,19 @@ abstract class BaseWebhook extends UpdateMode
     ];
 
     /**
+     * @var array|string[]
+     */
+    protected const TELEGRAM_IPV6_RANGES = [
+        '2001:b28::/32',
+        '2001:67c:4e8::/48',
+        '2001:67c:4ea::/48',
+        '2a0a:ed40::/32',
+        '2a0a:ed41::/32',
+        '2a0a:ed42::/32',
+        '2a0a:ed43::/32',
+    ];
+
+    /**
      * @return bool
      */
     private function isSafeMode(): bool
@@ -59,20 +72,48 @@ abstract class BaseWebhook extends UpdateMode
             return true;
         }
 
-        $ip = ip2long($ip);
-
-        if (!$ip) {
-            return false;
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) && $this->inIpv4Range($ip)) {
+            return true;
         }
 
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) && $this->inIpv6Range($ip)) {
+            return true;
+        }
+
+        $this->logger->errorNotAuthorizedIp($ip);
+        return false;
+    }
+
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    private function inIpv4Range(string $ip): bool
+    {
+        $ip = ip2long($ip);
         foreach (self::TELEGRAM_IPV4_RANGES as $lower => $upper) {
-            // Make sure the IPv4 is valid telegram ip.
             if ($ip >= ip2long($lower) && $ip <= ip2long($upper)) {
                 return true;
             }
         }
+        return false;
+    }
 
-        $this->logger->errorNotAuthorizedIp(long2ip($ip));
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    private function inIpv6Range(string $ip): bool
+    {
+        $prefix = inet_pton($ip);
+        foreach (self::TELEGRAM_IPV6_RANGES as $range) {
+            [$network, $maskBits] = explode('/', $range);
+            // All Telegram IPv6 ranges are byte-aligned (/32, /48), so a byte-slice is exact.
+            $maskBytes = (int)$maskBits / 8;
+            if (substr($prefix, 0, $maskBytes) === substr(inet_pton($network), 0, $maskBytes)) {
+                return true;
+            }
+        }
         return false;
     }
 
