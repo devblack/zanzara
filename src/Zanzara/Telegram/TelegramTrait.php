@@ -36,8 +36,10 @@ use Zanzara\Telegram\Type\Miscellaneous\BotShortDescription;
 use Zanzara\Telegram\Type\Miscellaneous\InputSticker;
 use Zanzara\Telegram\Type\Poll\Poll;
 use Zanzara\Telegram\Type\Response\TelegramException;
+use Zanzara\Telegram\Type\StarAmount;
 use Zanzara\Telegram\Type\StarTransactions;
 use Zanzara\Telegram\Type\Story;
+use Zanzara\Telegram\Type\UserChatBoosts;
 use Zanzara\Telegram\Type\Update;
 use Zanzara\Telegram\Type\User;
 use Zanzara\Telegram\Type\WebApp\SentWebAppMessage;
@@ -2638,6 +2640,193 @@ trait TelegramTrait
     {
         $required = compact("business_connection_id", "story_id");
         return $this->callApi("deleteStory", $required);
+    }
+
+    /**
+     * Use this method to get the current balance of Telegram Stars owned by the bot. Returns a StarAmount object on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#getmystarbalance
+     *
+     * @return PromiseInterface
+     */
+    public function getMyStarBalance(): PromiseInterface
+    {
+        return $this->callApi("getMyStarBalance", [], StarAmount::class);
+    }
+
+    /**
+     * Use this method to change the first and last name of a managed business account. Requires the can_change_name
+     * business bot right. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#setbusinessaccountname
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param string $first_name New value of the first name for the business account
+     * @param string|null $last_name New value of the optional last name for the business account
+     * @return PromiseInterface
+     */
+    public function setBusinessAccountName(string $business_connection_id, string $first_name, ?string $last_name = null): PromiseInterface
+    {
+        $required = compact("business_connection_id", "first_name", "last_name");
+        return $this->callApi("setBusinessAccountName", $required);
+    }
+
+    /**
+     * Use this method to change the username of a managed business account. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#setbusinessaccountusername
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param string|null $username New value of the username for the business account
+     * @return PromiseInterface
+     */
+    public function setBusinessAccountUsername(string $business_connection_id, ?string $username = null): PromiseInterface
+    {
+        $required = compact("business_connection_id", "username");
+        return $this->callApi("setBusinessAccountUsername", $required);
+    }
+
+    /**
+     * Use this method to change the bio of a managed business account. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#setbusinessaccountbio
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param string|null $bio New value of the bio for the business account
+     * @return PromiseInterface
+     */
+    public function setBusinessAccountBio(string $business_connection_id, ?string $bio = null): PromiseInterface
+    {
+        $required = compact("business_connection_id", "bio");
+        return $this->callApi("setBusinessAccountBio", $required);
+    }
+
+    /**
+     * Use this method to transfer Telegram Stars from the balance of a managed business account to the balance of the
+     * bot. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#transferbusinessaccountstars
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int $star_count Number of Telegram Stars to transfer
+     * @return PromiseInterface
+     */
+    public function transferBusinessAccountStars(string $business_connection_id, int $star_count): PromiseInterface
+    {
+        $required = compact("business_connection_id", "star_count");
+        return $this->callApi("transferBusinessAccountStars", $required);
+    }
+
+    /**
+     * Use this method to mark a message as read on behalf of a business account. Business messages that are not marked
+     * as read will not show up as read. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#readbusinessmessage
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int $chat_id Unique identifier of the chat in which the message was received
+     * @param int $message_id Unique identifier of the message to mark as read
+     * @return PromiseInterface
+     */
+    public function readBusinessMessage(string $business_connection_id, int $chat_id, int $message_id): PromiseInterface
+    {
+        $required = compact("business_connection_id", "chat_id", "message_id");
+        return $this->callApi("readBusinessMessage", $required);
+    }
+
+    /**
+     * Use this method to delete messages on behalf of a managed business account. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#deletebusinessmessages
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int[] $message_ids Unique identifiers of the messages to delete
+     * @param array $opt = [
+     *     'chat_id' => 'Unique identifier of the chat in which the messages were received'
+     * ]
+     * @return PromiseInterface
+     */
+    public function deleteBusinessMessages(string $business_connection_id, array $message_ids): PromiseInterface
+    {
+        $required = compact("business_connection_id", "message_ids");
+        return $this->callApi("deleteBusinessMessages", $required);
+    }
+
+    /**
+     * Use this method to get the list of boosts added to a chat by a user. Requires administrator rights in the chat.
+     * Returns a UserChatBoosts object on success.
+     *
+     * More on https://core.telegram.org/bots/api#getuserchatboosts
+     *
+     * @param mixed $chat_id Unique identifier of the chat
+     * @param int $user_id Unique identifier of the target user
+     * @return PromiseInterface
+     */
+    public function getUserChatBoosts($chat_id, int $user_id): PromiseInterface
+    {
+        $required = compact("chat_id", "user_id");
+        return $this->callApi("getUserChatBoosts", $required, UserChatBoosts::class);
+    }
+
+    /**
+     * Use this method to remove a reaction from a message. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#deletemessagereaction
+     *
+     * @param mixed $chat_id Unique identifier of the chat where the message was sent
+     * @param int $message_id Identifier of the message to remove the reaction from
+     * @param array $opt = [
+     *     'user_id' => 'Identifier of the user to remove the reaction from',
+     *     'actor_chat_id' => 'Identifier of the chat from which to remove the reaction'
+     * ]
+     * @return PromiseInterface
+     */
+    public function deleteMessageReaction($chat_id, int $message_id, array $opt = []): PromiseInterface
+    {
+        $params = array_merge(compact("chat_id", "message_id"), $opt);
+        return $this->callApi("deleteMessageReaction", $params);
+    }
+
+    /**
+     * Use this method to remove all reactions from a message. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#deleteallmessagereactions
+     *
+     * @param mixed $chat_id Unique identifier of the chat where the message was sent
+     * @param int $message_id Identifier of the message to remove all reactions from
+     * @param array $opt = [
+     *     'user_id' => 'Identifier of the user to remove all reactions from',
+     *     'actor_chat_id' => 'Identifier of the chat from which to remove all reactions'
+     * ]
+     * @return PromiseInterface
+     */
+    public function deleteAllMessageReactions($chat_id, int $message_id, array $opt = []): PromiseInterface
+    {
+        $params = array_merge(compact("chat_id", "message_id"), $opt);
+        return $this->callApi("deleteAllMessageReactions", $params);
+    }
+
+    /**
+     * Use this method to repost a story originally posted by another business account. Returns a Story object on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#repoststory
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int $from_chat_id Identifier of the chat that posted the story
+     * @param int $from_story_id Unique identifier of the story to repost
+     * @param int $active_period How long the story will be active, in seconds: 21600, 43200, 86400 or 172800
+     * @param array $opt = [
+     *     'post_to_chat_page' => 'True to post the story to the business account page',
+     *     'protect_content' => 'True to protect the content of the story'
+     * ]
+     * @return PromiseInterface
+     */
+    public function repostStory(string $business_connection_id, int $from_chat_id, int $from_story_id, int $active_period, array $opt = []): PromiseInterface
+    {
+        $params = array_merge(compact("business_connection_id", "from_chat_id", "from_story_id", "active_period"), $opt);
+        return $this->callApi("repostStory", $params, Story::class);
     }
 
     /**

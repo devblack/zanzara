@@ -11,8 +11,10 @@ use Zanzara\Telegram\Type\BotAccessSettings;
 use Zanzara\Telegram\Type\BusinessConnection;
 use Zanzara\Telegram\Type\Gifts;
 use Zanzara\Telegram\Type\ManagedBotCreated;
+use Zanzara\Telegram\Type\StarAmount;
 use Zanzara\Telegram\Type\StarTransactions;
 use Zanzara\Telegram\Type\Story;
+use Zanzara\Telegram\Type\UserChatBoosts;
 
 /**
  * Guards the Bot API 9/10 trait surface: every new method exists and its return type maps to a real class.
@@ -29,6 +31,16 @@ class TelegramTraitMethodsTest extends TestCase
             'setMessageReaction' => ['setMessageReaction', null],
             'getBusinessConnection' => ['getBusinessConnection', BusinessConnection::class],
             'getStarTransactions' => ['getStarTransactions', StarTransactions::class],
+            'getMyStarBalance' => ['getMyStarBalance', StarAmount::class],
+            'setBusinessAccountName' => ['setBusinessAccountName', null],
+            'setBusinessAccountUsername' => ['setBusinessAccountUsername', null],
+            'setBusinessAccountBio' => ['setBusinessAccountBio', null],
+            'transferBusinessAccountStars' => ['transferBusinessAccountStars', null],
+            'readBusinessMessage' => ['readBusinessMessage', null],
+            'deleteBusinessMessages' => ['deleteBusinessMessages', null],
+            'getUserChatBoosts' => ['getUserChatBoosts', UserChatBoosts::class],
+            'deleteMessageReaction' => ['deleteMessageReaction', null],
+            'deleteAllMessageReactions' => ['deleteAllMessageReactions', null],
             'refundStarPayment' => ['refundStarPayment', null],
             'getAvailableGifts' => ['getAvailableGifts', Gifts::class],
             'sendGift' => ['sendGift', null],
@@ -44,6 +56,7 @@ class TelegramTraitMethodsTest extends TestCase
             'postStory' => ['postStory', Story::class],
             'editStory' => ['editStory', Story::class],
             'deleteStory' => ['deleteStory', null],
+            'repostStory' => ['repostStory', Story::class],
         ];
     }
 
