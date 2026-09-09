@@ -676,7 +676,7 @@ trait TelegramTrait
      * must be an administrator in the chat for this to work and must have the appropriate admin rights. Returns True on
      * success.
      *
-     * More on https://core.telegram.org/bots/api#kickchatmember
+     * @deprecated Use banChatMember instead.
      *
      * @param $chat_id
      * @param $user_id
@@ -685,9 +685,7 @@ trait TelegramTrait
      */
     public function kickChatMember($chat_id, $user_id, array $opt = []): PromiseInterface
     {
-        $required = compact("chat_id", "user_id");
-        $params = array_merge($required, $opt);
-        return $this->callApi("kickChatMember", $params);
+        return $this->banChatMember($chat_id, $user_id, $opt);
     }
 
     /**
@@ -1006,7 +1004,7 @@ trait TelegramTrait
     /**
      * Use this method to get the number of members in a chat. Returns Int on success.
      *
-     * More on https://core.telegram.org/bots/api#getchatmemberscount
+     * @deprecated Use getChatMemberCount instead.
      *
      * @param $chat_id
      * @param array $opt
@@ -1014,9 +1012,7 @@ trait TelegramTrait
      */
     public function getChatMembersCount($chat_id, array $opt = []): PromiseInterface
     {
-        $required = compact("chat_id");
-        $params = array_merge($required, $opt);
-        return $this->callApi("getChatMembersCount", $params); //integer
+        return $this->getChatMemberCount($chat_id, $opt);
     }
 
     /**

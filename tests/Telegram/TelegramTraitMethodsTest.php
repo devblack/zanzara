@@ -79,6 +79,36 @@ class TelegramTraitMethodsTest extends TestCase
         }
     }
 
+    public static function deprecatedMethodProvider(): array
+    {
+        return [
+            'kickChatMember' => ['kickChatMember', 'banChatMember'],
+            'getChatMembersCount' => ['getChatMembersCount', 'getChatMemberCount'],
+        ];
+    }
+
+    /**
+     * @param string $method
+     * @param string $replacement
+     */
+    #[DataProvider('deprecatedMethodProvider')]
+    public function testDeprecatedMethodsForward(string $method, string $replacement): void
+    {
+        \PHPUnit\Framework\Assert::assertTrue(
+            method_exists(TelegramTrait::class, $method),
+            "TelegramTrait::$method does not exist"
+        );
+        $doc = (new \ReflectionMethod(TelegramTrait::class, $method))->getDocComment();
+        \PHPUnit\Framework\Assert::assertNotFalse(
+            strpos($doc ?: '', '@deprecated'),
+            "TelegramTrait::$method is not marked @deprecated"
+        );
+        \PHPUnit\Framework\Assert::assertStringContainsString(
+            $replacement . ' instead',
+            $doc
+        );
+    }
+
     public function testNewReturnTypesMap(): void
     {
         $mapper = new \Zanzara\ZanzaraMapper(new \JsonMapper());
