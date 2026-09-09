@@ -2,6 +2,7 @@
 
 namespace Zanzara\Test\Listener;
 
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Zanzara\Config;
 use Zanzara\Context;
@@ -22,7 +23,7 @@ class ListenerCallbackTest extends TestCase
         $config->setUpdateStream(__DIR__.'/../update_types/command.json');
         $bot = new Zanzara("test", $config);
 
-        $class = new class extends TestCase {
+        $class = new class extends Assert {
             public function start(Context $ctx)
             {
                 $update = $ctx->getUpdate();
@@ -89,7 +90,7 @@ class ListenerCallbackTest extends TestCase
     }
 }
 
-class TestCommandClassNoConstructor extends TestCase
+class TestCommandClassNoConstructor extends Assert
 {
 
     public function start(Context $ctx)
@@ -118,7 +119,7 @@ class TestCommandClassNoConstructor extends TestCase
     }
 }
 
-class TestCommandClassWithConstructor extends TestCase
+class TestCommandClassWithConstructor extends Assert
 {
 
     public function __construct(Zanzara $zanzara)

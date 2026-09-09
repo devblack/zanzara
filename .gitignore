@@ -4,3 +4,5 @@ vendor
 *.iml
 .env
 target
+composer.phar
+composer-setup.php
