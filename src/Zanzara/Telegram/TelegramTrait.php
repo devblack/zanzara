@@ -12,6 +12,8 @@ use React\Promise\PromiseInterface;
 use RingCentral\Psr7\MultipartStream;
 use Zanzara\Config;
 use Zanzara\MessageQueue;
+use Zanzara\Telegram\Type\BotAccessSettings;
+use Zanzara\Telegram\Type\BusinessConnection;
 use Zanzara\Telegram\Type\CallbackQuery;
 use Zanzara\Telegram\Type\Chat;
 use Zanzara\Telegram\Type\ChatInviteLink;
@@ -23,6 +25,7 @@ use Zanzara\Telegram\Type\File\StickerSet;
 use Zanzara\Telegram\Type\File\UserProfilePhotos;
 use Zanzara\Telegram\Type\Forum\ForumTopic;
 use Zanzara\Telegram\Type\Game\GameHighScore;
+use Zanzara\Telegram\Type\Gifts;
 use Zanzara\Telegram\Type\Input\InputFile;
 use Zanzara\Telegram\Type\MenuButton;
 use Zanzara\Telegram\Type\Message;
@@ -33,6 +36,8 @@ use Zanzara\Telegram\Type\Miscellaneous\BotShortDescription;
 use Zanzara\Telegram\Type\Miscellaneous\InputSticker;
 use Zanzara\Telegram\Type\Poll\Poll;
 use Zanzara\Telegram\Type\Response\TelegramException;
+use Zanzara\Telegram\Type\StarTransactions;
+use Zanzara\Telegram\Type\Story;
 use Zanzara\Telegram\Type\Update;
 use Zanzara\Telegram\Type\User;
 use Zanzara\Telegram\Type\WebApp\SentWebAppMessage;
@@ -2316,6 +2321,323 @@ trait TelegramTrait
     {
         $required = compact("chat_id", "sender_chat_id");
         return $this->callApi("unbanChatSenderChat", $required);
+    }
+
+    /**
+     * Use this method to change the chosen reactions on a message. Service messages can't be reacted to. Automatically
+     * forwarded messages from a channel to its discussion group have the same available reactions as messages in the
+     * channel. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#setmessagereaction
+     *
+     * @param $chat_id mixed Unique identifier for the target chat or username of the target channel (in the format
+     *                       @channelusername)
+     * @param $message_id mixed Identifier of the target message. If the message belongs to a media group, the reaction
+     *                          can be set to any of the first 100 messages in the group
+     * @param array $reaction = [
+     *     ['type' => 'emoji', 'emoji' => '👍'],
+     *     ['type' => 'custom_emoji', 'custom_emoji_id' => '123']
+     * ]
+     * @param array $opt = [
+     *     'is_big' => true
+     * ]
+     * @return PromiseInterface
+     */
+    public function setMessageReaction($chat_id, $message_id, array $reaction = [], array $opt = []): PromiseInterface
+    {
+        $required = compact("chat_id", "message_id", "reaction");
+        $params = array_merge($required, $opt);
+        return $this->callApi("setMessageReaction", $params);
+    }
+
+    /**
+     * Use this method to get information about the connection of the bot with a business account. Returns a
+     * BusinessConnection object on success.
+     *
+     * More on https://core.telegram.org/bots/api#getbusinessconnection
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @return PromiseInterface
+     */
+    public function getBusinessConnection(string $business_connection_id): PromiseInterface
+    {
+        $required = compact("business_connection_id");
+        return $this->callApi("getBusinessConnection", $required, BusinessConnection::class);
+    }
+
+    /**
+     * Use this method to get a list of Star transactions. Requires no parameters. Returns a StarTransactions object on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#getstartransactions
+     *
+     * @param array $opt = [
+     *     'offset' => 0,
+     *     'limit' => 100
+     * ]
+     * @return PromiseInterface
+     */
+    public function getStarTransactions(array $opt = []): PromiseInterface
+    {
+        return $this->callApi("getStarTransactions", $opt, StarTransactions::class);
+    }
+
+    /**
+     * Use this method to refund a successful payment in Telegram Stars. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#refundstarpayment
+     *
+     * @param $user_id mixed User identifier
+     * @param string $telegram_payment_charge_id Telegram payment identifier
+     * @return PromiseInterface
+     */
+    public function refundStarPayment($user_id, string $telegram_payment_charge_id): PromiseInterface
+    {
+        $required = compact("user_id", "telegram_payment_charge_id");
+        return $this->callApi("refundStarPayment", $required);
+    }
+
+    /**
+     * Use this method to get the gifts that can be sent to a user. Requires no parameters. Returns a Gifts object on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#getavailablegifts
+     *
+     * @return PromiseInterface
+     */
+    public function getAvailableGifts(): PromiseInterface
+    {
+        return $this->callApi("getAvailableGifts", [], Gifts::class);
+    }
+
+    /**
+     * Use this method to send a gift to the given user. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#sendgift
+     *
+     * @param $gift_id mixed Identifier of the gift
+     * @param array $opt = [
+     *     'user_id' => 123456789,
+     *     'text' => 'Congrats!',
+     *     'text_parse_mode' => 'HTML'
+     * ]
+     * @return PromiseInterface
+     */
+    public function sendGift($gift_id, array $opt = []): PromiseInterface
+    {
+        $required = compact("gift_id");
+        $params = array_merge($required, $opt);
+        return $this->callApi("sendGift", $params);
+    }
+
+    /**
+     * Use this method to change the privacy settings pertaining to incoming gifts in a business account. Returns True
+     * on success.
+     *
+     * More on https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     *
+     * @param $business_connection_id mixed Unique identifier of the business connection
+     * @param array $opt = [
+     *     'show_gift_button' => true,
+     *     'accepted_gift_types' => ['unlimited_gifts' => true, 'limited_gifts' => true],
+     *     'custom_gift_emoji_id' => '123'
+     * ]
+     * @return PromiseInterface
+     */
+    public function setBusinessAccountGiftSettings($business_connection_id, array $opt = []): PromiseInterface
+    {
+        $required = compact("business_connection_id");
+        $params = array_merge($required, $opt);
+        return $this->callApi("setBusinessAccountGiftSettings", $params);
+    }
+
+    /**
+     * Use this method to verify a user on behalf of the organization which is represented by the bot. Returns True on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#verifyuser
+     *
+     * @param $user_id mixed Unique identifier of the target user
+     * @param array $opt = [
+     *     'custom_description' => 'Your description'
+     * ]
+     * @return PromiseInterface
+     */
+    public function verifyUser($user_id, array $opt = []): PromiseInterface
+    {
+        $required = compact("user_id");
+        $params = array_merge($required, $opt);
+        return $this->callApi("verifyUser", $params);
+    }
+
+    /**
+     * Use this method to verify a chat on behalf of the organization which is represented by the bot. Returns True on
+     * success.
+     *
+     * More on https://core.telegram.org/bots/api#verifychat
+     *
+     * @param $chat_id mixed Unique identifier for the target chat or username of the target channel (in the format
+     *                       @channelusername)
+     * @param array $opt = [
+     *     'custom_description' => 'Your description'
+     * ]
+     * @return PromiseInterface
+     */
+    public function verifyChat($chat_id, array $opt = []): PromiseInterface
+    {
+        $required = compact("chat_id");
+        $params = array_merge($required, $opt);
+        return $this->callApi("verifyChat", $params);
+    }
+
+    /**
+     * Use this method to remove verification from a user who is currently verified on behalf of the organization which
+     * is represented by the bot. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#removeuserverification
+     *
+     * @param $user_id mixed Unique identifier of the target user
+     * @return PromiseInterface
+     */
+    public function removeUserVerification($user_id): PromiseInterface
+    {
+        $required = compact("user_id");
+        return $this->callApi("removeUserVerification", $required);
+    }
+
+    /**
+     * Use this method to remove verification from a chat that is currently verified on behalf of the organization
+     * which is represented by the bot. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#removechatverification
+     *
+     * @param $chat_id mixed Unique identifier for the target chat or username of the target channel (in the format
+     *                       @channelusername)
+     * @return PromiseInterface
+     */
+    public function removeChatVerification($chat_id): PromiseInterface
+    {
+        $required = compact("chat_id");
+        return $this->callApi("removeChatVerification", $required);
+    }
+
+    /**
+     * Use this method to get the token of a managed bot created by the user. Returns a String on success.
+     *
+     * More on https://core.telegram.org/bots/api#getmanagedbottoken
+     *
+     * @param $user_id mixed Unique identifier of the user who created the managed bot
+     * @return PromiseInterface
+     */
+    public function getManagedBotToken($user_id): PromiseInterface
+    {
+        $required = compact("user_id");
+        return $this->callApi("getManagedBotToken", $required);
+    }
+
+    /**
+     * Use this method to replace the token of a managed bot created by the user. Returns a String on success.
+     *
+     * More on https://core.telegram.org/bots/api#replacemanagedbottoken
+     *
+     * @param $user_id mixed Unique identifier of the user who created the managed bot
+     * @return PromiseInterface
+     */
+    public function replaceManagedBotToken($user_id): PromiseInterface
+    {
+        $required = compact("user_id");
+        return $this->callApi("replaceManagedBotToken", $required);
+    }
+
+    /**
+     * Use this method to get the access settings of a managed bot created by the user. Returns a BotAccessSettings
+     * object on success.
+     *
+     * More on https://core.telegram.org/bots/api#getmanagedbotaccesssettings
+     *
+     * @param $user_id mixed Unique identifier of the user who created the managed bot
+     * @return PromiseInterface
+     */
+    public function getManagedBotAccessSettings($user_id): PromiseInterface
+    {
+        $required = compact("user_id");
+        return $this->callApi("getManagedBotAccessSettings", $required, BotAccessSettings::class);
+    }
+
+    /**
+     * Use this method to set the access settings of a managed bot created by the user. Returns True on success.
+     *
+     * More on https://core.telegram.org/bots/api#setmanagedbotaccesssettings
+     *
+     * @param $user_id mixed Unique identifier of the user who created the managed bot
+     * @param array $opt = [
+     *     'is_access_restricted' => true,
+     *     'added_user_ids' => [123456789]
+     * ]
+     * @return PromiseInterface
+     */
+    public function setManagedBotAccessSettings($user_id, array $opt = []): PromiseInterface
+    {
+        $required = compact("user_id");
+        $params = array_merge($required, $opt);
+        return $this->callApi("setManagedBotAccessSettings", $params);
+    }
+
+    /**
+     * Use this method to post a story on behalf of a managed business account. Requires the can_manage_stories
+     * business bot right. Returns a Story object on success.
+     *
+     * More on https://core.telegram.org/bots/api#poststory
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param array $content Content of the story, e.g. ['type' => 'photo', 'photo' => 'file_id']
+     * @param array $opt = [
+     *     'active_period' => 86400,
+     *     'caption' => 'My story',
+     *     'protect_content' => true
+     * ]
+     * @return PromiseInterface
+     */
+    public function postStory(string $business_connection_id, array $content, array $opt = []): PromiseInterface
+    {
+        $required = compact("business_connection_id", "content");
+        $params = array_merge($required, $opt);
+        return $this->callApi("postStory", $params, Story::class);
+    }
+
+    /**
+     * Use this method to edit a story previously posted by the bot on behalf of a managed business account. Returns
+     * a Story object on success.
+     *
+     * More on https://core.telegram.org/bots/api#editstory
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int $story_id Unique identifier of the story to edit
+     * @param array $content Content of the story, e.g. ['type' => 'photo', 'photo' => 'file_id']
+     * @param array $opt
+     * @return PromiseInterface
+     */
+    public function editStory(string $business_connection_id, int $story_id, array $content, array $opt = []): PromiseInterface
+    {
+        $required = compact("business_connection_id", "story_id", "content");
+        $params = array_merge($required, $opt);
+        return $this->callApi("editStory", $params, Story::class);
+    }
+
+    /**
+     * Use this method to delete a story previously posted by the bot on behalf of a managed business account. Returns
+     * True on success.
+     *
+     * More on https://core.telegram.org/bots/api#deletestory
+     *
+     * @param string $business_connection_id Unique identifier of the business connection
+     * @param int $story_id Unique identifier of the story to delete
+     * @return PromiseInterface
+     */
+    public function deleteStory(string $business_connection_id, int $story_id): PromiseInterface
+    {
+        $required = compact("business_connection_id", "story_id");
+        return $this->callApi("deleteStory", $required);
     }
 
     /**
