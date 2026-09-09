@@ -1695,6 +1695,1298 @@ class Message
     }
 
     /**
+     * Optional. Information about the direct messages chat topic that contains the message
+     *
+     * @var DirectMessagesTopic|null
+     */
+    private $direct_messages_topic;
+
+    /**
+     * Optional. If the sender of the message boosted the chat, the number of boosts added by the user
+     *
+     * @var int|null
+     */
+    private $sender_boost_count;
+
+    /**
+     * Optional. The bot that actually sent the message on behalf of the business account
+     *
+     * @var User|null
+     */
+    private $sender_business_bot;
+
+    /**
+     * Optional. Tag or custom title of the sender of the message; for supergroups only
+     *
+     * @var string|null
+     */
+    private $sender_tag;
+
+    /**
+     * Optional. For ephemeral messages, the user who received the message
+     *
+     * @var User|null
+     */
+    private $receiver_user;
+
+    /**
+     * Optional. For ephemeral messages, identifier of the ephemeral message inside this chat
+     *
+     * @var int|null
+     */
+    private $ephemeral_message_id;
+
+    /**
+     * Optional. The unique identifier for the guest query. Use this identifier with the method answerGuestQuery to
+     * send a response message
+     *
+     * @var string|null
+     */
+    private $guest_query_id;
+
+    /**
+     * Optional. Unique identifier of the business connection from which the message was received
+     *
+     * @var string|null
+     */
+    private $business_connection_id;
+
+    /**
+     * Optional. Information about the original message for forwarded messages
+     *
+     * @var MessageOrigin|null
+     */
+    private $forward_origin;
+
+    /**
+     * Optional. Information about the message that is being replied to, which may come from another chat or forum
+     * topic
+     *
+     * @var ExternalReplyInfo|null
+     */
+    private $external_reply;
+
+    /**
+     * Optional. For replies that quote part of the original message, the quoted part of the message
+     *
+     * @var TextQuote|null
+     */
+    private $quote;
+
+    /**
+     * Optional. For replies to a story, the original story
+     *
+     * @var Story|null
+     */
+    private $reply_to_story;
+
+    /**
+     * Optional. Identifier of the specific checklist task that is being replied to
+     *
+     * @var int|null
+     */
+    private $reply_to_checklist_task_id;
+
+    /**
+     * Optional. Persistent identifier of the specific poll option that is being replied to
+     *
+     * @var string|null
+     */
+    private $reply_to_poll_option_id;
+
+    /**
+     * Optional. For a message sent by a guest bot, the user whose original message triggered the bot's response
+     *
+     * @var User|null
+     */
+    private $guest_bot_caller_user;
+
+    /**
+     * Optional. For a message sent by a guest bot, the chat whose original message triggered the bot's response
+     *
+     * @var Chat|null
+     */
+    private $guest_bot_caller_chat;
+
+    /**
+     * Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business
+     * message, or as a scheduled message
+     *
+     * @var bool|null
+     */
+    private $is_from_offline;
+
+    /**
+     * Optional. True, if the message is a paid post. Note that such posts must not be deleted for 24 hours to receive
+     * the payment and can't be edited
+     *
+     * @var bool|null
+     */
+    private $is_paid_post;
+
+    /**
+     * Optional. The number of Telegram Stars that were paid by the sender of the message to send it
+     *
+     * @var int|null
+     */
+    private $paid_star_count;
+
+    /**
+     * Optional. Link preview options for the message
+     *
+     * @var LinkPreviewOptions|null
+     */
+    private $link_preview_options;
+
+    /**
+     * Optional. Information about a suggested post
+     *
+     * @var SuggestedPostInfo|null
+     */
+    private $suggested_post_info;
+
+    /**
+     * Optional. Unique identifier of the message effect added to the message
+     *
+     * @var string|null
+     */
+    private $effect_id;
+
+    /**
+     * Optional. The rich formatted message
+     *
+     * @var RichMessage|null
+     */
+    private $rich_message;
+
+    /**
+     * Optional. Message is a live photo, information about the live photo
+     *
+     * @var LivePhoto|null
+     */
+    private $live_photo;
+
+    /**
+     * Optional. Message is a paid media, information about the paid media
+     *
+     * @var PaidMediaInfo|null
+     */
+    private $paid_media;
+
+    /**
+     * Optional. Message is a story, information about the story
+     *
+     * @var Story|null
+     */
+    private $story;
+
+    /**
+     * Optional. True, if the caption must be shown above and not below the media
+     *
+     * @var bool|null
+     */
+    private $show_caption_above_media;
+
+    /**
+     * Optional. Message is a checklist, information about the checklist
+     *
+     * @var Checklist|null
+     */
+    private $checklist;
+
+    /**
+     * Optional. Service message: the owner of the chat left the chat
+     *
+     * @var ChatOwnerLeft|null
+     */
+    private $chat_owner_left;
+
+    /**
+     * Optional. Service message: the ownership of the chat changed
+     *
+     * @var ChatOwnerChanged|null
+     */
+    private $chat_owner_changed;
+
+    /**
+     * Optional. Message is a service message about a refunded payment
+     *
+     * @var RefundedPayment|null
+     */
+    private $refunded_payment;
+
+    /**
+     * Optional. Service message: users were shared with the bot
+     *
+     * @var UsersShared|null
+     */
+    private $users_shared;
+
+    /**
+     * Optional. Message is a service message about a regular gift that was sent or received
+     *
+     * @var GiftInfo|null
+     */
+    private $gift;
+
+    /**
+     * Optional. Message is a service message about a unique gift that was sent or received
+     *
+     * @var UniqueGiftInfo|null
+     */
+    private $unique_gift;
+
+    /**
+     * Optional. Message is a service message about an upgrade of a regular gift
+     *
+     * @var GiftInfo|null
+     */
+    private $gift_upgrade_sent;
+
+    /**
+     * Optional. Service message: user boosted the chat
+     *
+     * @var ChatBoostAdded|null
+     */
+    private $boost_added;
+
+    /**
+     * Optional. Service message: a chat background was set
+     *
+     * @var ChatBackground|null
+     */
+    private $chat_background_set;
+
+    /**
+     * Optional. Service message: status changes for tasks in a checklist
+     *
+     * @var ChecklistTasksDone|null
+     */
+    private $checklist_tasks_done;
+
+    /**
+     * Optional. Service message: new tasks were added to a checklist
+     *
+     * @var ChecklistTasksAdded|null
+     */
+    private $checklist_tasks_added;
+
+    /**
+     * Optional. Service message: a chat was added to a community
+     *
+     * @var CommunityChatAdded|null
+     */
+    private $community_chat_added;
+
+    /**
+     * Optional. Service message: a chat was added to a community by the bot
+     *
+     * @var CommunityChatJoined|null
+     */
+    private $community_chat_joined;
+
+    /**
+     * Optional. Service message: a chat was removed from a community
+     *
+     * @var CommunityChatRemoved|null
+     */
+    private $community_chat_removed;
+
+    /**
+     * Optional. Service message: a price change for direct messages sent to the channel chat
+     *
+     * @var DirectMessagePriceChanged|null
+     */
+    private $direct_message_price_changed;
+
+    /**
+     * Optional. Service message: a scheduled giveaway was created
+     *
+     * @var GiveawayCreated|null
+     */
+    private $giveaway_created;
+
+    /**
+     * Optional. Message is a message about a scheduled giveaway
+     *
+     * @var Giveaway|null
+     */
+    private $giveaway;
+
+    /**
+     * Optional. Message is a message about the completion of a giveaway with public winners
+     *
+     * @var GiveawayWinners|null
+     */
+    private $giveaway_winners;
+
+    /**
+     * Optional. Service message about the completion of a giveaway without public winners
+     *
+     * @var GiveawayCompleted|null
+     */
+    private $giveaway_completed;
+
+    /**
+     * Optional. Service message: a new bot was created to be managed by the bot
+     *
+     * @var ManagedBotCreated|null
+     */
+    private $managed_bot_created;
+
+    /**
+     * Optional. Service message: a price change for paid messages sent to the chat
+     *
+     * @var PaidMessagePriceChanged|null
+     */
+    private $paid_message_price_changed;
+
+    /**
+     * Optional. Service message: a new option was added to a poll
+     *
+     * @var PollOptionAdded|null
+     */
+    private $poll_option_added;
+
+    /**
+     * Optional. Service message: a poll option was deleted from a poll
+     *
+     * @var PollOptionDeleted|null
+     */
+    private $poll_option_deleted;
+
+    /**
+     * Optional. Service message about the approval of a suggested post
+     *
+     * @var SuggestedPostApproved|null
+     */
+    private $suggested_post_approved;
+
+    /**
+     * Optional. Service message about the failed approval of a suggested post
+     *
+     * @var SuggestedPostApprovalFailed|null
+     */
+    private $suggested_post_approval_failed;
+
+    /**
+     * Optional. Service message about the rejection of a suggested post
+     *
+     * @var SuggestedPostDeclined|null
+     */
+    private $suggested_post_declined;
+
+    /**
+     * Optional. Service message about a successful payment for a suggested post
+     *
+     * @var SuggestedPostPaid|null
+     */
+    private $suggested_post_paid;
+
+    /**
+     * Optional. Service message about a payment refund for a suggested post
+     *
+     * @var SuggestedPostRefunded|null
+     */
+    private $suggested_post_refunded;
+
+    /**
+     * @return DirectMessagesTopic|null
+     */
+    public function getDirectMessagesTopic(): ?DirectMessagesTopic
+    {
+        return $this->direct_messages_topic;
+    }
+
+    /**
+     * @param DirectMessagesTopic|null $direct_messages_topic
+     */
+    public function setDirectMessagesTopic(?DirectMessagesTopic $direct_messages_topic): void
+    {
+        $this->direct_messages_topic = $direct_messages_topic;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSenderBoostCount(): ?int
+    {
+        return $this->sender_boost_count;
+    }
+
+    /**
+     * @param int|null $sender_boost_count
+     */
+    public function setSenderBoostCount(?int $sender_boost_count): void
+    {
+        $this->sender_boost_count = $sender_boost_count;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getSenderBusinessBot(): ?User
+    {
+        return $this->sender_business_bot;
+    }
+
+    /**
+     * @param User|null $sender_business_bot
+     */
+    public function setSenderBusinessBot(?User $sender_business_bot): void
+    {
+        $this->sender_business_bot = $sender_business_bot;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSenderTag(): ?string
+    {
+        return $this->sender_tag;
+    }
+
+    /**
+     * @param string|null $sender_tag
+     */
+    public function setSenderTag(?string $sender_tag): void
+    {
+        $this->sender_tag = $sender_tag;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getReceiverUser(): ?User
+    {
+        return $this->receiver_user;
+    }
+
+    /**
+     * @param User|null $receiver_user
+     */
+    public function setReceiverUser(?User $receiver_user): void
+    {
+        $this->receiver_user = $receiver_user;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getEphemeralMessageId(): ?int
+    {
+        return $this->ephemeral_message_id;
+    }
+
+    /**
+     * @param int|null $ephemeral_message_id
+     */
+    public function setEphemeralMessageId(?int $ephemeral_message_id): void
+    {
+        $this->ephemeral_message_id = $ephemeral_message_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGuestQueryId(): ?string
+    {
+        return $this->guest_query_id;
+    }
+
+    /**
+     * @param string|null $guest_query_id
+     */
+    public function setGuestQueryId(?string $guest_query_id): void
+    {
+        $this->guest_query_id = $guest_query_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBusinessConnectionId(): ?string
+    {
+        return $this->business_connection_id;
+    }
+
+    /**
+     * @param string|null $business_connection_id
+     */
+    public function setBusinessConnectionId(?string $business_connection_id): void
+    {
+        $this->business_connection_id = $business_connection_id;
+    }
+
+    /**
+     * @return MessageOrigin|null
+     */
+    public function getForwardOrigin(): ?MessageOrigin
+    {
+        return $this->forward_origin;
+    }
+
+    /**
+     * @param MessageOrigin|null $forward_origin
+     */
+    public function setForwardOrigin(?MessageOrigin $forward_origin): void
+    {
+        $this->forward_origin = $forward_origin;
+    }
+
+    /**
+     * @return ExternalReplyInfo|null
+     */
+    public function getExternalReply(): ?ExternalReplyInfo
+    {
+        return $this->external_reply;
+    }
+
+    /**
+     * @param ExternalReplyInfo|null $external_reply
+     */
+    public function setExternalReply(?ExternalReplyInfo $external_reply): void
+    {
+        $this->external_reply = $external_reply;
+    }
+
+    /**
+     * @return TextQuote|null
+     */
+    public function getQuote(): ?TextQuote
+    {
+        return $this->quote;
+    }
+
+    /**
+     * @param TextQuote|null $quote
+     */
+    public function setQuote(?TextQuote $quote): void
+    {
+        $this->quote = $quote;
+    }
+
+    /**
+     * @return Story|null
+     */
+    public function getReplyToStory(): ?Story
+    {
+        return $this->reply_to_story;
+    }
+
+    /**
+     * @param Story|null $reply_to_story
+     */
+    public function setReplyToStory(?Story $reply_to_story): void
+    {
+        $this->reply_to_story = $reply_to_story;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getReplyToChecklistTaskId(): ?int
+    {
+        return $this->reply_to_checklist_task_id;
+    }
+
+    /**
+     * @param int|null $reply_to_checklist_task_id
+     */
+    public function setReplyToChecklistTaskId(?int $reply_to_checklist_task_id): void
+    {
+        $this->reply_to_checklist_task_id = $reply_to_checklist_task_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReplyToPollOptionId(): ?string
+    {
+        return $this->reply_to_poll_option_id;
+    }
+
+    /**
+     * @param string|null $reply_to_poll_option_id
+     */
+    public function setReplyToPollOptionId(?string $reply_to_poll_option_id): void
+    {
+        $this->reply_to_poll_option_id = $reply_to_poll_option_id;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getGuestBotCallerUser(): ?User
+    {
+        return $this->guest_bot_caller_user;
+    }
+
+    /**
+     * @param User|null $guest_bot_caller_user
+     */
+    public function setGuestBotCallerUser(?User $guest_bot_caller_user): void
+    {
+        $this->guest_bot_caller_user = $guest_bot_caller_user;
+    }
+
+    /**
+     * @return Chat|null
+     */
+    public function getGuestBotCallerChat(): ?Chat
+    {
+        return $this->guest_bot_caller_chat;
+    }
+
+    /**
+     * @param Chat|null $guest_bot_caller_chat
+     */
+    public function setGuestBotCallerChat(?Chat $guest_bot_caller_chat): void
+    {
+        $this->guest_bot_caller_chat = $guest_bot_caller_chat;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isFromOffline(): ?bool
+    {
+        return $this->is_from_offline;
+    }
+
+    /**
+     * @param bool|null $is_from_offline
+     */
+    public function setIsFromOffline(?bool $is_from_offline): void
+    {
+        $this->is_from_offline = $is_from_offline;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPaidPost(): ?bool
+    {
+        return $this->is_paid_post;
+    }
+
+    /**
+     * @param bool|null $is_paid_post
+     */
+    public function setIsPaidPost(?bool $is_paid_post): void
+    {
+        $this->is_paid_post = $is_paid_post;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPaidStarCount(): ?int
+    {
+        return $this->paid_star_count;
+    }
+
+    /**
+     * @param int|null $paid_star_count
+     */
+    public function setPaidStarCount(?int $paid_star_count): void
+    {
+        $this->paid_star_count = $paid_star_count;
+    }
+
+    /**
+     * @return LinkPreviewOptions|null
+     */
+    public function getLinkPreviewOptions(): ?LinkPreviewOptions
+    {
+        return $this->link_preview_options;
+    }
+
+    /**
+     * @param LinkPreviewOptions|null $link_preview_options
+     */
+    public function setLinkPreviewOptions(?LinkPreviewOptions $link_preview_options): void
+    {
+        $this->link_preview_options = $link_preview_options;
+    }
+
+    /**
+     * @return SuggestedPostInfo|null
+     */
+    public function getSuggestedPostInfo(): ?SuggestedPostInfo
+    {
+        return $this->suggested_post_info;
+    }
+
+    /**
+     * @param SuggestedPostInfo|null $suggested_post_info
+     */
+    public function setSuggestedPostInfo(?SuggestedPostInfo $suggested_post_info): void
+    {
+        $this->suggested_post_info = $suggested_post_info;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEffectId(): ?string
+    {
+        return $this->effect_id;
+    }
+
+    /**
+     * @param string|null $effect_id
+     */
+    public function setEffectId(?string $effect_id): void
+    {
+        $this->effect_id = $effect_id;
+    }
+
+    /**
+     * @return RichMessage|null
+     */
+    public function getRichMessage(): ?RichMessage
+    {
+        return $this->rich_message;
+    }
+
+    /**
+     * @param RichMessage|null $rich_message
+     */
+    public function setRichMessage(?RichMessage $rich_message): void
+    {
+        $this->rich_message = $rich_message;
+    }
+
+    /**
+     * @return LivePhoto|null
+     */
+    public function getLivePhoto(): ?LivePhoto
+    {
+        return $this->live_photo;
+    }
+
+    /**
+     * @param LivePhoto|null $live_photo
+     */
+    public function setLivePhoto(?LivePhoto $live_photo): void
+    {
+        $this->live_photo = $live_photo;
+    }
+
+    /**
+     * @return PaidMediaInfo|null
+     */
+    public function getPaidMedia(): ?PaidMediaInfo
+    {
+        return $this->paid_media;
+    }
+
+    /**
+     * @param PaidMediaInfo|null $paid_media
+     */
+    public function setPaidMedia(?PaidMediaInfo $paid_media): void
+    {
+        $this->paid_media = $paid_media;
+    }
+
+    /**
+     * @return Story|null
+     */
+    public function getStory(): ?Story
+    {
+        return $this->story;
+    }
+
+    /**
+     * @param Story|null $story
+     */
+    public function setStory(?Story $story): void
+    {
+        $this->story = $story;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getShowCaptionAboveMedia(): ?bool
+    {
+        return $this->show_caption_above_media;
+    }
+
+    /**
+     * @param bool|null $show_caption_above_media
+     */
+    public function setShowCaptionAboveMedia(?bool $show_caption_above_media): void
+    {
+        $this->show_caption_above_media = $show_caption_above_media;
+    }
+
+    /**
+     * @return Checklist|null
+     */
+    public function getChecklist(): ?Checklist
+    {
+        return $this->checklist;
+    }
+
+    /**
+     * @param Checklist|null $checklist
+     */
+    public function setChecklist(?Checklist $checklist): void
+    {
+        $this->checklist = $checklist;
+    }
+
+    /**
+     * @return ChatOwnerLeft|null
+     */
+    public function getChatOwnerLeft(): ?ChatOwnerLeft
+    {
+        return $this->chat_owner_left;
+    }
+
+    /**
+     * @param ChatOwnerLeft|null $chat_owner_left
+     */
+    public function setChatOwnerLeft(?ChatOwnerLeft $chat_owner_left): void
+    {
+        $this->chat_owner_left = $chat_owner_left;
+    }
+
+    /**
+     * @return ChatOwnerChanged|null
+     */
+    public function getChatOwnerChanged(): ?ChatOwnerChanged
+    {
+        return $this->chat_owner_changed;
+    }
+
+    /**
+     * @param ChatOwnerChanged|null $chat_owner_changed
+     */
+    public function setChatOwnerChanged(?ChatOwnerChanged $chat_owner_changed): void
+    {
+        $this->chat_owner_changed = $chat_owner_changed;
+    }
+
+    /**
+     * @return RefundedPayment|null
+     */
+    public function getRefundedPayment(): ?RefundedPayment
+    {
+        return $this->refunded_payment;
+    }
+
+    /**
+     * @param RefundedPayment|null $refunded_payment
+     */
+    public function setRefundedPayment(?RefundedPayment $refunded_payment): void
+    {
+        $this->refunded_payment = $refunded_payment;
+    }
+
+    /**
+     * @return UsersShared|null
+     */
+    public function getUsersShared(): ?UsersShared
+    {
+        return $this->users_shared;
+    }
+
+    /**
+     * @param UsersShared|null $users_shared
+     */
+    public function setUsersShared(?UsersShared $users_shared): void
+    {
+        $this->users_shared = $users_shared;
+    }
+
+    /**
+     * @return GiftInfo|null
+     */
+    public function getGift(): ?GiftInfo
+    {
+        return $this->gift;
+    }
+
+    /**
+     * @param GiftInfo|null $gift
+     */
+    public function setGift(?GiftInfo $gift): void
+    {
+        $this->gift = $gift;
+    }
+
+    /**
+     * @return UniqueGiftInfo|null
+     */
+    public function getUniqueGift(): ?UniqueGiftInfo
+    {
+        return $this->unique_gift;
+    }
+
+    /**
+     * @param UniqueGiftInfo|null $unique_gift
+     */
+    public function setUniqueGift(?UniqueGiftInfo $unique_gift): void
+    {
+        $this->unique_gift = $unique_gift;
+    }
+
+    /**
+     * @return GiftInfo|null
+     */
+    public function getGiftUpgradeSent(): ?GiftInfo
+    {
+        return $this->gift_upgrade_sent;
+    }
+
+    /**
+     * @param GiftInfo|null $gift_upgrade_sent
+     */
+    public function setGiftUpgradeSent(?GiftInfo $gift_upgrade_sent): void
+    {
+        $this->gift_upgrade_sent = $gift_upgrade_sent;
+    }
+
+    /**
+     * @return ChatBoostAdded|null
+     */
+    public function getBoostAdded(): ?ChatBoostAdded
+    {
+        return $this->boost_added;
+    }
+
+    /**
+     * @param ChatBoostAdded|null $boost_added
+     */
+    public function setBoostAdded(?ChatBoostAdded $boost_added): void
+    {
+        $this->boost_added = $boost_added;
+    }
+
+    /**
+     * @return ChatBackground|null
+     */
+    public function getChatBackgroundSet(): ?ChatBackground
+    {
+        return $this->chat_background_set;
+    }
+
+    /**
+     * @param ChatBackground|null $chat_background_set
+     */
+    public function setChatBackgroundSet(?ChatBackground $chat_background_set): void
+    {
+        $this->chat_background_set = $chat_background_set;
+    }
+
+    /**
+     * @return ChecklistTasksDone|null
+     */
+    public function getChecklistTasksDone(): ?ChecklistTasksDone
+    {
+        return $this->checklist_tasks_done;
+    }
+
+    /**
+     * @param ChecklistTasksDone|null $checklist_tasks_done
+     */
+    public function setChecklistTasksDone(?ChecklistTasksDone $checklist_tasks_done): void
+    {
+        $this->checklist_tasks_done = $checklist_tasks_done;
+    }
+
+    /**
+     * @return ChecklistTasksAdded|null
+     */
+    public function getChecklistTasksAdded(): ?ChecklistTasksAdded
+    {
+        return $this->checklist_tasks_added;
+    }
+
+    /**
+     * @param ChecklistTasksAdded|null $checklist_tasks_added
+     */
+    public function setChecklistTasksAdded(?ChecklistTasksAdded $checklist_tasks_added): void
+    {
+        $this->checklist_tasks_added = $checklist_tasks_added;
+    }
+
+    /**
+     * @return CommunityChatAdded|null
+     */
+    public function getCommunityChatAdded(): ?CommunityChatAdded
+    {
+        return $this->community_chat_added;
+    }
+
+    /**
+     * @param CommunityChatAdded|null $community_chat_added
+     */
+    public function setCommunityChatAdded(?CommunityChatAdded $community_chat_added): void
+    {
+        $this->community_chat_added = $community_chat_added;
+    }
+
+    /**
+     * @return CommunityChatJoined|null
+     */
+    public function getCommunityChatJoined(): ?CommunityChatJoined
+    {
+        return $this->community_chat_joined;
+    }
+
+    /**
+     * @param CommunityChatJoined|null $community_chat_joined
+     */
+    public function setCommunityChatJoined(?CommunityChatJoined $community_chat_joined): void
+    {
+        $this->community_chat_joined = $community_chat_joined;
+    }
+
+    /**
+     * @return CommunityChatRemoved|null
+     */
+    public function getCommunityChatRemoved(): ?CommunityChatRemoved
+    {
+        return $this->community_chat_removed;
+    }
+
+    /**
+     * @param CommunityChatRemoved|null $community_chat_removed
+     */
+    public function setCommunityChatRemoved(?CommunityChatRemoved $community_chat_removed): void
+    {
+        $this->community_chat_removed = $community_chat_removed;
+    }
+
+    /**
+     * @return DirectMessagePriceChanged|null
+     */
+    public function getDirectMessagePriceChanged(): ?DirectMessagePriceChanged
+    {
+        return $this->direct_message_price_changed;
+    }
+
+    /**
+     * @param DirectMessagePriceChanged|null $direct_message_price_changed
+     */
+    public function setDirectMessagePriceChanged(?DirectMessagePriceChanged $direct_message_price_changed): void
+    {
+        $this->direct_message_price_changed = $direct_message_price_changed;
+    }
+
+    /**
+     * @return GiveawayCreated|null
+     */
+    public function getGiveawayCreated(): ?GiveawayCreated
+    {
+        return $this->giveaway_created;
+    }
+
+    /**
+     * @param GiveawayCreated|null $giveaway_created
+     */
+    public function setGiveawayCreated(?GiveawayCreated $giveaway_created): void
+    {
+        $this->giveaway_created = $giveaway_created;
+    }
+
+    /**
+     * @return Giveaway|null
+     */
+    public function getGiveaway(): ?Giveaway
+    {
+        return $this->giveaway;
+    }
+
+    /**
+     * @param Giveaway|null $giveaway
+     */
+    public function setGiveaway(?Giveaway $giveaway): void
+    {
+        $this->giveaway = $giveaway;
+    }
+
+    /**
+     * @return GiveawayWinners|null
+     */
+    public function getGiveawayWinners(): ?GiveawayWinners
+    {
+        return $this->giveaway_winners;
+    }
+
+    /**
+     * @param GiveawayWinners|null $giveaway_winners
+     */
+    public function setGiveawayWinners(?GiveawayWinners $giveaway_winners): void
+    {
+        $this->giveaway_winners = $giveaway_winners;
+    }
+
+    /**
+     * @return GiveawayCompleted|null
+     */
+    public function getGiveawayCompleted(): ?GiveawayCompleted
+    {
+        return $this->giveaway_completed;
+    }
+
+    /**
+     * @param GiveawayCompleted|null $giveaway_completed
+     */
+    public function setGiveawayCompleted(?GiveawayCompleted $giveaway_completed): void
+    {
+        $this->giveaway_completed = $giveaway_completed;
+    }
+
+    /**
+     * @return ManagedBotCreated|null
+     */
+    public function getManagedBotCreated(): ?ManagedBotCreated
+    {
+        return $this->managed_bot_created;
+    }
+
+    /**
+     * @param ManagedBotCreated|null $managed_bot_created
+     */
+    public function setManagedBotCreated(?ManagedBotCreated $managed_bot_created): void
+    {
+        $this->managed_bot_created = $managed_bot_created;
+    }
+
+    /**
+     * @return PaidMessagePriceChanged|null
+     */
+    public function getPaidMessagePriceChanged(): ?PaidMessagePriceChanged
+    {
+        return $this->paid_message_price_changed;
+    }
+
+    /**
+     * @param PaidMessagePriceChanged|null $paid_message_price_changed
+     */
+    public function setPaidMessagePriceChanged(?PaidMessagePriceChanged $paid_message_price_changed): void
+    {
+        $this->paid_message_price_changed = $paid_message_price_changed;
+    }
+
+    /**
+     * @return PollOptionAdded|null
+     */
+    public function getPollOptionAdded(): ?PollOptionAdded
+    {
+        return $this->poll_option_added;
+    }
+
+    /**
+     * @param PollOptionAdded|null $poll_option_added
+     */
+    public function setPollOptionAdded(?PollOptionAdded $poll_option_added): void
+    {
+        $this->poll_option_added = $poll_option_added;
+    }
+
+    /**
+     * @return PollOptionDeleted|null
+     */
+    public function getPollOptionDeleted(): ?PollOptionDeleted
+    {
+        return $this->poll_option_deleted;
+    }
+
+    /**
+     * @param PollOptionDeleted|null $poll_option_deleted
+     */
+    public function setPollOptionDeleted(?PollOptionDeleted $poll_option_deleted): void
+    {
+        $this->poll_option_deleted = $poll_option_deleted;
+    }
+
+    /**
+     * @return SuggestedPostApproved|null
+     */
+    public function getSuggestedPostApproved(): ?SuggestedPostApproved
+    {
+        return $this->suggested_post_approved;
+    }
+
+    /**
+     * @param SuggestedPostApproved|null $suggested_post_approved
+     */
+    public function setSuggestedPostApproved(?SuggestedPostApproved $suggested_post_approved): void
+    {
+        $this->suggested_post_approved = $suggested_post_approved;
+    }
+
+    /**
+     * @return SuggestedPostApprovalFailed|null
+     */
+    public function getSuggestedPostApprovalFailed(): ?SuggestedPostApprovalFailed
+    {
+        return $this->suggested_post_approval_failed;
+    }
+
+    /**
+     * @param SuggestedPostApprovalFailed|null $suggested_post_approval_failed
+     */
+    public function setSuggestedPostApprovalFailed(?SuggestedPostApprovalFailed $suggested_post_approval_failed): void
+    {
+        $this->suggested_post_approval_failed = $suggested_post_approval_failed;
+    }
+
+    /**
+     * @return SuggestedPostDeclined|null
+     */
+    public function getSuggestedPostDeclined(): ?SuggestedPostDeclined
+    {
+        return $this->suggested_post_declined;
+    }
+
+    /**
+     * @param SuggestedPostDeclined|null $suggested_post_declined
+     */
+    public function setSuggestedPostDeclined(?SuggestedPostDeclined $suggested_post_declined): void
+    {
+        $this->suggested_post_declined = $suggested_post_declined;
+    }
+
+    /**
+     * @return SuggestedPostPaid|null
+     */
+    public function getSuggestedPostPaid(): ?SuggestedPostPaid
+    {
+        return $this->suggested_post_paid;
+    }
+
+    /**
+     * @param SuggestedPostPaid|null $suggested_post_paid
+     */
+    public function setSuggestedPostPaid(?SuggestedPostPaid $suggested_post_paid): void
+    {
+        $this->suggested_post_paid = $suggested_post_paid;
+    }
+
+    /**
+     * @return SuggestedPostRefunded|null
+     */
+    public function getSuggestedPostRefunded(): ?SuggestedPostRefunded
+    {
+        return $this->suggested_post_refunded;
+    }
+
+    /**
+     * @param SuggestedPostRefunded|null $suggested_post_refunded
+     */
+    public function setSuggestedPostRefunded(?SuggestedPostRefunded $suggested_post_refunded): void
+    {
+        $this->suggested_post_refunded = $suggested_post_refunded;
+    }
+
+    /**
      * @return bool
      */
     public function isServiceMessage(): bool
@@ -1720,7 +3012,35 @@ class Message
             $this->video_chat_started !== null ||
             $this->video_chat_ended !== null ||
             $this->video_chat_participants_invited !== null ||
-            $this->web_app_data !== null
+            $this->web_app_data !== null ||
+            $this->chat_owner_left !== null ||
+            $this->chat_owner_changed !== null ||
+            $this->refunded_payment !== null ||
+            $this->users_shared !== null ||
+            $this->gift !== null ||
+            $this->unique_gift !== null ||
+            $this->gift_upgrade_sent !== null ||
+            $this->boost_added !== null ||
+            $this->chat_background_set !== null ||
+            $this->checklist_tasks_done !== null ||
+            $this->checklist_tasks_added !== null ||
+            $this->community_chat_added !== null ||
+            $this->community_chat_joined !== null ||
+            $this->community_chat_removed !== null ||
+            $this->direct_message_price_changed !== null ||
+            $this->giveaway_created !== null ||
+            $this->giveaway !== null ||
+            $this->giveaway_winners !== null ||
+            $this->giveaway_completed !== null ||
+            $this->managed_bot_created !== null ||
+            $this->paid_message_price_changed !== null ||
+            $this->poll_option_added !== null ||
+            $this->poll_option_deleted !== null ||
+            $this->suggested_post_approved !== null ||
+            $this->suggested_post_approval_failed !== null ||
+            $this->suggested_post_declined !== null ||
+            $this->suggested_post_paid !== null ||
+            $this->suggested_post_refunded !== null
         );
     }
 }
