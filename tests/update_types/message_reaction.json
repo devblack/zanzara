@@ -1,0 +1,31 @@
+{
+    "update_id": 52259551,
+    "message_reaction": {
+        "chat": {
+            "id": 222222222,
+            "first_name": "Michael",
+            "username": "mscott",
+            "type": "private"
+        },
+        "message_id": 23756,
+        "user": {
+            "id": 222222222,
+            "is_bot": false,
+            "first_name": "Michael",
+            "username": "mscott"
+        },
+        "date": 1700000001,
+        "old_reaction": [
+            {
+                "type": "emoji",
+                "emoji": "👍"
+            }
+        ],
+        "new_reaction": [
+            {
+                "type": "custom_emoji",
+                "custom_emoji_id": "5379"
+            }
+        ]
+    }
+}

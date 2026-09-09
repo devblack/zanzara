@@ -1,0 +1,21 @@
+{
+    "update_id": 52259550,
+    "business_message": {
+        "message_id": 24000,
+        "business_connection_id": "bc-1",
+        "from": {
+            "id": 222222222,
+            "is_bot": false,
+            "first_name": "Michael",
+            "username": "mscott"
+        },
+        "chat": {
+            "id": 222222222,
+            "first_name": "Michael",
+            "username": "mscott",
+            "type": "private"
+        },
+        "date": 1700000000,
+        "text": "Business message here"
+    }
+}
